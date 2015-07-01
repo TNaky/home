@@ -32,6 +32,30 @@ if has('vim_starting')
             \ 'unix' : 'make -f make_unix.mak',
         \ },
     \ }
+    " Uniteを利用してカラースキーム一覧表示を行う
+    NeoBundle 'ujihisa/unite-colorscheme'
+
+    " 以下カラースキーム
+    " olarized カラースキーム
+    NeoBundle 'altercation/vim-colors-solarized'
+    " mustang カラースキーム
+    NeoBundle 'croaker/mustang-vim'
+    " wombat カラースキーム
+    NeoBundle 'jeffreyiacono/vim-colors-wombat'
+    " jellybeans カラースキーム
+    NeoBundle 'nanotech/jellybeans.vim'
+    " lucius カラースキーム
+    NeoBundle 'vim-scripts/Lucius'
+    " zenburn カラースキーム
+    NeoBundle 'vim-scripts/Zenburn'
+    " mrkn256 カラースキーム
+    NeoBundle 'mrkn/mrkn256.vim'
+    " railscasts カラースキーム
+    NeoBundle 'jpo/vim-railscasts-theme'
+    " pyte カラースキーム
+    NeoBundle 'therubymug/vim-pyte'
+    " molokai カラースキーム
+    NeoBundle 'tomasr/molokai'
 
     " NeoBundleを終了
     call neobundle#end()
@@ -177,10 +201,12 @@ filetype plugin indent on
 syntax on
 " カラー設定を256階調で設定
 set t_Co=256
+" カラースキーマを設定
+colorscheme molokai
 
 " 全角スペースを標示
 function! ZnkakSpace()
-    highlight ZnkakSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
+    highlight ZnkakSpace cterm=underline ctermfg=grey gui=underline guifg=grey
 endfunction
 
 if has('syntax')
