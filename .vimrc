@@ -91,7 +91,7 @@ elseif neobundle#is_installed('neocomplcache')
     let g:neocomplcache_enable_ignore_case = 1
     let g:neocomplcache_enable_smart_case = 1
     if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
+        let g:neocomplcache_keyword_patterns = {U8}
     endif
     let g:neocomplcache_keyword_patterns._ = '\h\w*'
     let g:neocomplcache_enable_camel_case_completion = 1
@@ -175,10 +175,25 @@ hi CursorLineNr term=bold   cterm=NONE ctermfg=228 ctermbg=NONE
 filetype plugin indent on
 " シンタックスカラーを有効化
 syntax on
+" カラー設定を256階調で設定
+set t_Co=256
 
-" hi Pmenu ctermbg=4
-" hi PmenuSel ctermbg=1
-" hi PMenuSbar ctermbg=4
+" 全角スペースを標示
+function! ZnkakSpace()
+    highlight ZnkakSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
+endfunction
+
+if has('syntax')
+    augroup ZnkakSpace
+        autocmd!
+        " ZnkakSpaceをカラーファイルで設定するなら次の行は削除
+        autocmd ColorScheme * call ZnkakSpace()
+        " 全角スペースのハイライト指定
+        autocmd VimEnter,WinEnter * match ZnkakSpace /　/
+        autocmd VimEnter,WinEnter * match ZnkakSpace '\%u3000'
+    augroup END
+    call ZnkakSpace()
+endif
 
 " バイナリ編集（xxd）モード（vim -b で起動，もしくは *.bin ファイルを開くと起動）
 augroup Binary
