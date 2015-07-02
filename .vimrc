@@ -1,4 +1,4 @@
-" プラグイン設定
+"b8 プラグイン設定
 " NeoBundle が無ければインストール
 if !isdirectory(expand('~/.vim/bundle'))
     !mkdir -p ~/.vim/bundle
@@ -23,6 +23,8 @@ if has('vim_starting')
     NeoBundle 'Shougo/vimfiler.vim'
     " 入力補完
     NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
+    " Python用入力補完
+    NeoBundle 'davidhalter/jedi-vim'
     " Vimproc（非同期処理を実現するプラグイン：重たい処理実施時にVimがフリーズしない様にします）
     NeoBundle 'Shougo/vimproc.vim', {
         \ 'build' : {
@@ -94,6 +96,15 @@ if neobundle#is_installed('neocomplete')
     let g:neocomplete#enable_ignore_case = 0
     " 辞書ファイルの定義
     let g:neocomplete#dictionary_filetype_lists = {}
+
+    " jedi-vimの設定
+    autocm FileType python setlocal omnifunc=jedi#completions completeopt-=preview
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+    endif
+    let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
     
     " キーワードの定義
     if !exists('g:neocomplete#keyword_patterns')
