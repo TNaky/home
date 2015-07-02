@@ -32,7 +32,7 @@ if has('vim_starting')
             \ 'unix' : 'make -f make_unix.mak',
         \ },
     \ }
-    " Uniteを利用してカラースキーム一覧表示を行う
+    " Uniteを利用してカラースキーム一覧表示を行う(:Unite colorscheme -auto-preview)
     NeoBundle 'ujihisa/unite-colorscheme'
 
     " 以下カラースキーム
@@ -72,7 +72,7 @@ let g:vimfiler_safe_mode_by_defaul = 0
 if neobundle#is_installed('neocomplete')
     " NeoComplete用設定
     " Neocompleteを有効化
-    let g:neocomplete#enable_at_atartup = 1
+    let g:neocomplete#enable_at_startup = 1
     " 補完が自動で開始される文字数
     let g:neocomplete#auto_completion_start_length = 3
     " Smart caseを有効化（大文字が入力されるまで，大文字小文字の区別を考慮しない）
@@ -115,7 +115,7 @@ elseif neobundle#is_installed('neocomplcache')
     let g:neocomplcache_enable_ignore_case = 1
     let g:neocomplcache_enable_smart_case = 1
     if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {U8}
+        let g:neocomplcache_keyword_patterns = {}
     endif
     let g:neocomplcache_keyword_patterns._ = '\h\w*'
     let g:neocomplcache_enable_camel_case_completion = 1
@@ -201,7 +201,7 @@ filetype plugin indent on
 syntax on
 " カラー設定を256階調で設定
 set t_Co=256
-" カラースキーマを設定
+" カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
 colorscheme molokai
 
 " 全角スペースを標示
