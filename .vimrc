@@ -15,15 +15,24 @@ if has('vim_starting')
     call neobundle#begin(expand('~/.vim/bundle'))
     " NeoBundle 自体を NeoBundle で管理
     NeoBundleFetch 'Shougo/neobundle.vim'
+
     " 以下に追加したいプラグインを記述
     " Vim上でデータを操作するためのインターフェース
     NeoBundle 'Shougo/unite.vim'
+    " Vimで開いたファイル履歴を記録
+    NeoBundle 'Shougo/neomru.vim', {
+        \ 'depends' : 'Shougo/unite.vim'
+    \ }
     " Vim上で閲覧可能なファイラー（Shougo/unite.vimと依存関係有り）
     NeoBundle 'Shougo/vimfiler.vim'
     " 入力補完
     NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
     " Python用入力補完
     NeoBundle 'davidhalter/jedi-vim'
+    " スニペット補完プラグイン
+    NeoBundle 'Shougo/neosnippet'
+    " 各種スニペット
+    NeoBundle 'Shougo/neosnippet-snippets'
     " Vimproc（非同期処理を実現するプラグイン：重たい処理実施時にVimがフリーズしない様にします）
     NeoBundle 'Shougo/vimproc.vim', {
         \ 'build' : {
@@ -94,12 +103,12 @@ if neobundle#is_installed('neocomplete')
     let g:neocomplete#max_list = 5
     " 補完候補提示の際に先頭を選択状態へ
     let g:neocomplete#enable_auto_select = 1
-    let g:neocomplete#enable_ignore_case = 0
+    " 補完（小文字を無視して検索）
+    let g:neocomplete#enable_refresh_always = 1
     " 辞書ファイルの定義
     let g:neocomplete#sources#dictionary#dictionaries = {
         \ 'default' : '',
     \ }
-
     " キーワードの定義
     if !exists('g:neocomplete#keyword_patterns')
         let g:neocomplete#keyword_patterns = {}
@@ -109,6 +118,10 @@ if neobundle#is_installed('neocomplete')
     " Neocomplete のキーマップ
     " 選択されている候補をEnterキーで入力
     inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    " 入力補完ウィンドウを閉じる
+    inoremap <expr><C-y> neocomplete#close_popup()
+    " 入力補完をキャンセル
+    inoremap <expr><C-e> neocomplete#cancel_popup()
 
     " jedi-vimの設定
     autocm FileType python setlocal omnifunc=jedi#completions completeopt-=preview
@@ -145,6 +158,10 @@ noremap <silent> <C-o><C-o> :VimFiler -split -simple -winwidth=35 -toggle -no-qu
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " S-tabキーで前の検索候補を選択
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" スニペット補完のキーマップ
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
 
 " 環境設定
 " カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
