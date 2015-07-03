@@ -11,8 +11,9 @@ vimの設定関連
 ```
 気に入ったテーマを選んだら
 ```vim
-colorscheme 'scheme name'
+colorscheme scheme_name
 ```
+のscheme_nameをテーマ名に書き換えてテーマを設定
 
 ## syntasticを使う場合
 zshenvにrbenvの設定が必要です
