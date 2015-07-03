@@ -3,6 +3,17 @@ homeDir
 homeディレクトリに置いてあるrcファイルとか...
 
 # .vimrc
+vimの設定関連
+
+## vimのカラースキームをプレビューする方法
+```vim
+:Unite colorscheme -auto-preview
+```
+気に入ったテーマを選んだら
+```vim
+colorscheme 'scheme name'
+```
+
 ## syntasticを使う場合
 zshenvにrbenvの設定が必要です
 
