@@ -1,7 +1,8 @@
 homeDir
 =======
-# .vimrc
 homeディレクトリに置いてあるrcファイルとか...
+
+# .vimrc
 ## syntasticを使う場合
 zshenvにrbenvの設定が必要です
 
