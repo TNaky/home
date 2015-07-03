@@ -1,4 +1,4 @@
-"b8 プラグイン設定
+" プラグイン設定
 " NeoBundle が無ければインストール
 if !isdirectory(expand('~/.vim/bundle'))
     !mkdir -p ~/.vim/bundle
@@ -15,7 +15,6 @@ if has('vim_starting')
     call neobundle#begin(expand('~/.vim/bundle'))
     " NeoBundle 自体を NeoBundle で管理
     NeoBundleFetch 'Shougo/neobundle.vim'
-
     " 以下に追加したいプラグインを記述
     " Vim上でデータを操作するためのインターフェース
     NeoBundle 'Shougo/unite.vim'
@@ -34,6 +33,8 @@ if has('vim_starting')
             \ 'unix' : 'make -f make_unix.mak',
         \ },
     \ }
+    " 構文チェックをしてくれまする
+    NeoBundle 'scrooloose/syntastic.git'
     " Uniteを利用してカラースキーム一覧表示を行う(:Unite colorscheme -auto-preview)
     NeoBundle 'ujihisa/unite-colorscheme'
 
@@ -95,7 +96,19 @@ if neobundle#is_installed('neocomplete')
     let g:neocomplete#enable_auto_select = 1
     let g:neocomplete#enable_ignore_case = 0
     " 辞書ファイルの定義
-    let g:neocomplete#dictionary_filetype_lists = {}
+    let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+    \ }
+
+    " キーワードの定義
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns._ = '\h\w*'
+
+    " Neocomplete のキーマップ
+    " 選択されている候補をEnterキーで入力
+    inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
 
     " jedi-vimの設定
     autocm FileType python setlocal omnifunc=jedi#completions completeopt-=preview
@@ -105,20 +118,6 @@ if neobundle#is_installed('neocomplete')
         let g:neocomplete#force_omni_input_patterns = {}
     endif
     let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
-    
-    " キーワードの定義
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns._ = '\h\w*'
-
-    " Neocomplete のキーマップ
-    " tabキーで次の検索候補を選択
-    inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    " S-tabキーで前の検索候補を選択
-    inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    " 選択されている候補をEnterキーで入力
-    inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
 
 elseif neobundle#is_installed('neocomplcache')
     " NeoComplcache用設定
@@ -142,8 +141,14 @@ noremap <C-a> ^
 noremap <C-e> $
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
 noremap <silent> <C-o><C-o> :VimFiler -split -simple -winwidth=35 -toggle -no-quit<ENTER>
+" tabキーで次の検索候補を選択
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" S-tabキーで前の検索候補を選択
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " 環境設定
+" カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
+colorscheme molokai
 " バックスペースキーを有効化
 set backspace=indent,eol,start
 " タブの文字数
@@ -212,8 +217,6 @@ filetype plugin indent on
 syntax on
 " カラー設定を256階調で設定
 set t_Co=256
-" カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
-colorscheme molokai
 
 " 全角スペースを標示
 function! ZnkakSpace()
