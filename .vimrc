@@ -95,6 +95,8 @@ endif
 let g:vimfiler_as_default_explorer = 1
 " Tree状にディレクトリを展開した際にずれるスペース
 let g:vimfiler_tree_indentation = 2
+" 開いたファイルのディレクトリへVimのカレントディレクトリを自動移動
+let g:vimfiler_enable_auto_cd = 1
 
 " 入力補完設定
 if neobundle#is_installed('neocomplete')
