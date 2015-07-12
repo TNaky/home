@@ -270,7 +270,7 @@ inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 " タグジャンプに必要なtagファイルを生成
-nnoremap <silent><Leader>tag :Ctags
+nnoremap <silent><Leader>tg :Ctags
 " タグジャンプしますよ
 noremap <C-d> <C-]>
 " ジャンプ先から戻りますよ
