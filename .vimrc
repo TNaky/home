@@ -7,6 +7,7 @@ if !isdirectory(expand('~/.vim/bundle'))
   NeoBundleInstall
   q
 endif
+
 " Vim 起動時のみ実行
 if has('vim_starting')
   " bundle で管理するディレクトリを設定
@@ -46,6 +47,18 @@ if has('vim_starting')
   NeoBundle 'scrooloose/syntastic.git'
   " Uniteを利用してカラースキーム一覧表示を行う(:Unite colorscheme -auto-preview)
   NeoBundle 'ujihisa/unite-colorscheme'
+  " タグジャンプに必要なtagファイルってのを自動生成してくれる良い奴
+  NeoBundle 'soramugi/auto-ctags.vim'
+  " メモ帳的なやつ
+  NeoBundle 'glidenote/memolist.vim'
+  " 絞り込み検索をしてくれる頼れるやつだよ
+  NeoBundle 'fuenor/qfixgrep'
+  " Vimの中でスクリプトを実行するよ
+  NeoBundle 'thinca/vim-quickrun'
+  " QuickRunの出力結果を吐き出す場所
+  NeoBundle "osyo-manga/unite-quickfix"
+  " QuickRun実行中に，ほんとに実行してるの？ってならないようにするアニメーション
+  NeoBundle 'osyo-manga/shabadou.vim'
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -68,6 +81,8 @@ if has('vim_starting')
   NeoBundle 'therubymug/vim-pyte'
   " molokai カラースキーム
   NeoBundle 'tomasr/molokai'
+  " Hybiridカラースキーム
+  NeoBundle 'w0ng/vim-hybrid'
 
   " NeoBundleを終了
   call neobundle#end()
@@ -78,7 +93,8 @@ endif
 " Filerの設定
 " Vim標準ファイラを置き換え
 let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_defaul = 0
+" Tree状にディレクトリを展開した際にずれるスペース
+let g:vimfiler_tree_indentation = 2
 
 " 入力補完設定
 if neobundle#is_installed('neocomplete')
@@ -138,12 +154,72 @@ elseif neobundle#is_installed('neocomplcache')
   let g:neocomplcache_enable_ignore_case = 1
   let g:neocomplcache_enable_smart_case = 1
   if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
+    let g:neocomplcache_keyword_patterns = {}e*
   endif
   let g:neocomplcache_keyword_patterns._ = '\h\w*'
   let g:neocomplcache_enable_camel_case_completion = 1
   let g:neocomplcache_enable_underbar_completion = 1
 endif
+
+" いわゆるタグジャンプについての設定(auto-ctagsの設定なわけだが)
+" 読み込むタグファイルを設定
+set tags+=tags;./**/tags
+" ファイルの保存時にtagsファイルを作り直すよ(もともとtagsファイルが合った場合のみ）
+if filereadable(expand('./tags'))
+  let g:auto_ctags = 1
+else
+  let g:auto_ctags = 0
+endif
+" ctagsのオプションを設定してるよ
+let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --edit_action'
+
+" メモ帳の設定
+" メモ帳を保存する場所
+if exists("+autochdir")
+  " Vimで開いたファイルと同じディレクトリ下にメモ用のディレクトリを作成
+  cd %:h
+  let g:memolist_path = expand('./memolists')
+else
+  " ホームディレクトリ下にメモ用のディレクトリを作成
+  let g:memolist_path = expand('~/memolists')
+endif
+" メモの形式
+let g:memolist_memo_suffix = "md"
+" メモ作成時にグループタグを設定
+let g:memolist_prompt_tags = 1
+" メモ作成時にカテゴリタグを設定
+let g:memolist_prompt_categories = 1
+" 検索にgfixgrepを使うよ
+let g:memolist_gfixgrep = 1
+" メモ表示にVimFiler使う
+let g:memolist_vimfiler = 1
+" メモを開くときにVimFilerに渡されるオプション
+" -split : 画面を分割してVimFilerを表示
+" -winwidth : VimFiler展開時のタブサイズ
+let g:memolist_vimfiler_option = "-split -winwidth=30 -simple"
+" メモ作成画面を別タブで表示する関数
+function! MemoNew()
+  :30vsplit
+  :MemoNew
+endfunction
+
+" QuickRunの設定
+" QuickRun実行時に渡されるオプション群
+let g:quickrun_config = {
+  \ "_" : {
+    \ "hook/unite_quickfix/enable_failure" : 1,
+    \ "hook/close_unite_quickfix/enable_hook_loaded" : 1,
+    \ "hook/close_quickfix/enable_exit" : 1,
+    \ "hook/close_buffer/enable_failure" : 1,
+    \ "hook/close_buffer/enable_empty_data" : 1,
+    \ "hook/inu/enable" : 1,
+    \ "hook/inu/wait" : 20,
+    \ "outputter" : "multi:buffer:quickfix",
+    \ "outputter/buffer/split" : ":botright 3sp",
+    \ "runner" : "vimproc",
+    \ "runner/vimproc/updatetime" : 30,
+    \ }
+  \ }
 
 " キーマップ設定
 " 文字列検索後のハイライトを解除
@@ -152,18 +228,61 @@ nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<cr><Esc>
 noremap <C-a> ^
 " 行の末尾へ移動
 noremap <C-e> $
+" 画面を横分割
+nnoremap <silent> <BAR> :vsplit<Cr>
+" 画面を立て分割
+nnoremap <silent> - :split<Cr>
+" 上の画面へ移動
+nnoremap <C-k> <C-w>k
+" 下の画面へ移動
+nnoremap <C-j> <C-w>j
+" 右の画面へ移動
+nnoremap <C-l> <C-w>l
+" 左の画面へ移動
+nnoremap <C-h> <C-w>h
+" 画面幅を均等にします
+nnoremap = <C-w>=
+" 画面幅を増やします
+nnoremap > <C-w>>
+" 画面幅を減らします
+nnoremap < <C-w><
+" 画面の高さを上げます
+nnoremap ^ <C-w>+
+" 画面の高さを下げます(アンダーバーだぞ! ハイフンじゃないぞ!!）
+nnoremap _ <C-w>-
+" 新規タブを作成
+nnoremap <C-t> :tabnew<Cr>
+" 次のタブへ移動
+nnoremap <C-n> gt
+" 前のタブへ移動
+nnoremap <C-p> gT
 " 置換
 noremap s :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-noremap <silent> <C-o><C-o> :VimFiler -split -simple -winwidth=35 -toggle -no-quit<ENTER>
+noremap <silent> <C-o> :VimFilerTab<Cr>
 " tabキーで次の検索候補を選択
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " S-tabキーで前の検索候補を選択
 inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " スニペット補完のキーマップ
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
+" タグジャンプに必要なtagファイルを生成
+nnoremap <silent><Leader>tag :Ctags
+" タグジャンプしますよ
+noremap <C-d> <C-]>
+" ジャンプ先から戻りますよ
+noremap <C-b> <C-t>
+" メモを新規作成
+nnoremap <silent>mn :call MemoNew()<Cr>
+" メモをリスト表示
+nnoremap <silent>ml :MemoList<Cr>
+" メモをgrep検索
+nnoremap <silent>gm :MemoGrep<Cr>
+" Quickrunを実行（要するにIEDとかにあるRunです）
+nnoremap rn :QuickRun 
+" Quickrunの終了(おなじみCtrl+cです）
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
 " 環境設定
 " カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
@@ -237,7 +356,7 @@ syntax on
 " カラー設定を256階調で設定
 set t_Co=256
 " ESC打鍵時に，挿入モード離脱までの時間
-set timeoutlen=100
+set timeoutlen=200
 
 " 全角スペースを標示
 function! ZnkakSpace()
