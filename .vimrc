@@ -59,6 +59,8 @@ if has('vim_starting')
   NeoBundle "osyo-manga/unite-quickfix"
   " QuickRun実行中に，ほんとに実行してるの？ってならないようにするアニメーション
   NeoBundle 'osyo-manga/shabadou.vim'
+  " Vim上でlatexをコンパイルやらをするためのプラグイン
+  " NeoBundle 'vim-latex/vim-latex'
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -177,14 +179,7 @@ let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --edit_action'
 
 " メモ帳の設定
 " メモ帳を保存する場所
-if exists("+autochdir")
-  " Vimで開いたファイルと同じディレクトリ下にメモ用のディレクトリを作成
-  cd %:h
-  let g:memolist_path = expand('./memolists')
-else
-  " ホームディレクトリ下にメモ用のディレクトリを作成
-  let g:memolist_path = expand('~/memolists')
-endif
+let g:memolist_path = expand('~/.vim/memolists')
 " メモの形式
 let g:memolist_memo_suffix = "md"
 " メモ作成時にグループタグを設定
@@ -261,7 +256,9 @@ nnoremap <C-p> gT
 " 置換
 noremap s :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-noremap <silent> <C-o> :VimFilerTab<Cr>
+noremap <silent> ft :VimFilerTab<Cr>
+" Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
+noremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " tabキーで次の検索候補を選択
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " S-tabキーで前の検索候補を選択
