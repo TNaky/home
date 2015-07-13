@@ -4,6 +4,17 @@ homeディレクトリに置いてあるrcファイルとか...
 
 # .vimrc
 vimの設定関連
+vimは+luaの必要が有ります
+
+## vimのlua有効化方法
+### Mac
+Homebrewでおｋ
+```zsh
+$ brew install lua
+$ brew reinstall vim --with-lua
+```
+### Linux & UNIX
+自分でmake & make install頑張って！
 
 ## vimのカラースキームをプレビューする方法
 ```vim
