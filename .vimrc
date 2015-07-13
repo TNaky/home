@@ -237,6 +237,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-l> <C-w>l
 " 左の画面へ移動
 nnoremap <C-h> <C-w>h
+" 上の画面と入れ替え
+nnoremap wk <C-w>K
+" 下の画面と入れ替え
+nnoremap wj <C-w>J
+" 右の画面と入れ替え
+nnoremap wl <C-w>L
+" 左の画面と入れ替え
+nnoremap wh <C-w>H
 " 画面幅を均等にします
 nnoremap = <C-w>=
 " 画面幅を増やします
