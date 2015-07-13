@@ -4,6 +4,7 @@ homeディレクトリに置いてあるrcファイルとか...
 
 # .vimrc
 vimの設定関連
+
 vimは+luaの必要が有ります
 
 ## vimのlua有効化方法
