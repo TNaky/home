@@ -68,7 +68,7 @@ Vim keymapping
 |キー|デフォルト|機能|モード|
 |:---:|:---:|:---:|:---:|
 |st|:Gstatus\<Cr\>|git status|ノーマル|
-|ad|:Gwrite|\<Cr\>|git add|ノーマル|
+|ad|:Gwrite\<Cr\>|git add|ノーマル|
 |cm|:Gcommit\<Cr\>|git commit|ノーマル|
 |co|:Gread\<Cr\>|git checkout|ノーマル|
 |bm|:Gblame\<Cr\>|git blame|ノーマル|
