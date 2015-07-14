@@ -47,7 +47,7 @@ cp -f /usr/local/Cellar/ricty/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
 
 使っているTerminalなりiTermなりのフォントにインストールしたPowerlineFontを設定してください．
 #### iTerm
-Preferences... > Profiles > Text
+iTerm > Preferences... > Profiles > Text
 
 |Type|Font|Size|
 |:---:|:---:|:---:|
