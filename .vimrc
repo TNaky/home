@@ -122,6 +122,8 @@ if has('vim_starting')
       \ 'mappings' : ['<Plug>(vimshell_switch)']
     \ }
   \ }
+  " VimShellでssh
+  NeoBundle 'ujihisa/vimshell-ssh'
 
   " 以下カラースキーム
   " olarized カラースキーム
