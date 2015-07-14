@@ -404,7 +404,7 @@ endfunction
 
 " キーマップ設定
 " 文字列検索後のハイライトを解除
-nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<cr><Esc>
+nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<Cr><Esc>
 " 行の先頭へ移動
 noremap <C-a> ^
 " 行の末尾へ移動
