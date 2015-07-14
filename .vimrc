@@ -460,7 +460,7 @@ nnoremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " 入力補完のキーバインド
 if neobundle#is_installed('neocomplete.vim')
   " 選択されている候補をEnterキーで入力
-  inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  inoremap <expr><Cr> pumvisible() ? neocomplete#close_popup() : "\<Cr>"
   " 入力補完ウィンドウを閉じる
   inoremap <expr><C-y> neocomplete#close_popup()
   " 入力補完をキャンセル
@@ -502,7 +502,7 @@ nnoremap lm :Gblame<Cr>
 " git diff HEADとの変更をdiffってくれる
 nnoremap df :Gdiff<Cr>
 " VimShellが起動するよ
-noremap <silent> vs :<C-u>VimShellPop<CR>
+noremap <silent> vs :<C-u>VimShellPop<Cr>
 
 " 環境設定
 " カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
