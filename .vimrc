@@ -1,3 +1,27 @@
+" Vimの設定ファイル(.vimrc)
+" author  : TNak
+" since   : 2015.04.01
+
+" 諸注意
+" *1
+"   基本的にNeoCompleteの利用を想定しているので，luaに対応したver.7.3以上のVimを使ってね
+"   Mac環境でbrewを使ってインストールする方法は，githubのREADMEに書いてあるよ
+" *2
+"   ステータスラインでPowerline Fontを利用することを前提にしているので，
+"   Powerlineのパッチを当てたフォントを，Mac環境ならTerminalなりiTermなりに設定してね
+"   iTermの場合は
+"   Preferences > Profiles > Text
+"   のRegular FontとNon-ASCII Fontから設定できるよ
+"   Regular FontのFontSizeをNon-ASCII Fontより2point大きく設定するといい感じのバランス
+"   おすすめのフォントはPowerline for ricty
+"   Mac環境なら
+"   $ brew tap sanemat/font
+"   $ brew install --powerline --vim-powerline ricty
+"   でダウンロードできるから，インストールしてみて
+" *3
+"   memolistで作成したメモのデータは，デフォルト設定だと'$HOME/.vim/memolists/'に格納されるよ
+"   変更したい場合は，g:memolist_pathに設定するディレクトリパスを変えてね
+
 " プラグイン設定
 " NeoBundle が無ければインストール
 if !isdirectory(expand('~/.vim/bundle'))
@@ -10,7 +34,7 @@ endif
 
 " Vim 起動時のみ実行
 if has('vim_starting')
-  " bundle で管理するディレクトリを設定
+  " neobundle で管理するディレクトリを設定
   set runtimepath+=$HOME/.vim/bundle/neobundle.vim
   " NeoBundle の初期化関数を呼び出し
   call neobundle#begin(expand('~/.vim/bundle'))
@@ -18,6 +42,8 @@ if has('vim_starting')
   NeoBundleFetch 'Shougo/neobundle.vim'
 
   " 以下に追加したいプラグインを記述
+  " Vimのドキュメントが日本語化される神プラグイン
+  NeoBundle 'vim-jp/vimdoc-ja'
   " Vim上でデータを操作するためのインターフェース
   NeoBundle 'Shougo/unite.vim'
   " Vimで開いたファイル履歴を記録
@@ -26,14 +52,6 @@ if has('vim_starting')
   \ }
   " Vim上で閲覧可能なファイラー（Shougo/unite.vimと依存関係有り）
   NeoBundle 'Shougo/vimfiler.vim'
-  " 入力補完
-  NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
-  " Python用入力補完
-  NeoBundle 'davidhalter/jedi-vim'
-  " スニペット補完プラグイン
-  NeoBundle 'Shougo/neosnippet'
-  " 各種スニペット
-  NeoBundle 'Shougo/neosnippet-snippets'
   " Vimproc（非同期処理を実現するプラグイン：重たい処理実施時にVimがフリーズしない様にします）
   NeoBundle 'Shougo/vimproc.vim', {
     \ 'build' : {
@@ -43,6 +61,26 @@ if has('vim_starting')
       \ 'unix' : 'make -f make_unix.mak',
     \ },
   \ }
+  " 入力補完
+  if has('lua')
+    " luaインタプリタがある場合はNeoCompleteがインストールされるよ
+    " NeoCompleteはNeoComplcacheの新しいバージョンだよ
+    " NeoComplcacheと比較して高速化等がなされてるらしいよ
+    NeoBundle 'Shougo/neocomplete.vim', {
+      \ 'depends' : 'Shougo/vimproc.vim',
+      \ 'autoload' : { 'insert' : 1,}
+    \ }
+  else
+    " luaインタプリタが無い場合はNeoComplcacheがインストールされるよ
+    " NeoComplcacheはNeoCompleteの古いバージョンだよ
+    NeoBundle 'Shougo/neocomplcache.vim'
+  endif
+  " Python用入力補完
+  NeoBundle 'davidhalter/jedi-vim'
+  " スニペット補完プラグイン
+  NeoBundle 'Shougo/neosnippet'
+  " 各種スニペット
+  NeoBundle 'Shougo/neosnippet-snippets'
   " 構文チェックをしてくれまする
   NeoBundle 'scrooloose/syntastic.git'
   " Uniteを利用してカラースキーム一覧表示を行う(:Unite colorscheme -auto-preview)
@@ -54,13 +92,36 @@ if has('vim_starting')
   " 絞り込み検索をしてくれる頼れるやつだよ
   NeoBundle 'fuenor/qfixgrep'
   " Vimの中でスクリプトを実行するよ
-  NeoBundle 'thinca/vim-quickrun'
+  NeoBundle 'thinca/vim-quickrun', {
+    \ 'autoload' : {
+      \ 'mappings' : [['n', '\r']],
+      \ 'commands' : ['QuickRun']
+    \ }
+  \ }
   " QuickRunの出力結果を吐き出す場所
   NeoBundle "osyo-manga/unite-quickfix"
   " QuickRun実行中に，ほんとに実行してるの？ってならないようにするアニメーション
   NeoBundle 'osyo-manga/shabadou.vim'
   " Vim上でlatexをコンパイルやらをするためのプラグイン
   " NeoBundle 'vim-latex/vim-latex'
+  " Git
+  NeoBundle 'tpope/vim-fugitive'
+  " Gitの差分を教えてくれるやつ
+  NeoBundle 'airblade/vim-gitgutter'
+  " Powerline化
+  NeoBundle 'itchyny/lightline.vim'
+  " VimScriptで作ってあるshell
+  NeoBundle 'Shougo/vimshell', {
+    \ 'depends' : 'Shougo/vimproc.vim',
+    \ 'autoload' : {
+      \ 'commands' : [
+        \ { 'name' : 'VimShell', 'complete' : 'customlist,vimshell#complete'},
+        \ 'VimShellExecute', 'VimShellInteractive',
+        \ 'VimShellTerminal', 'VimShellPop'
+      \ ],
+      \ 'mappings' : ['<Plug>(vimshell_switch)']
+    \ }
+  \ }
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -101,7 +162,7 @@ let g:vimfiler_tree_indentation = 2
 let g:vimfiler_enable_auto_cd = 1
 
 " 入力補完設定
-if neobundle#is_installed('neocomplete')
+if neobundle#is_installed('neocomplete.vim')
   " NeoComplete用設定
   " Neocompleteを有効化
   let g:neocomplete#enable_at_startup = 1
@@ -134,14 +195,6 @@ if neobundle#is_installed('neocomplete')
     let g:neocomplete#keyword_patterns = {}
   endif
   let g:neocomplete#keyword_patterns._ = '\h\w*'
-
-  " Neocomplete のキーマップ
-  " 選択されている候補をEnterキーで入力
-  inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
-  " 入力補完ウィンドウを閉じる
-  inoremap <expr><C-y> neocomplete#close_popup()
-  " 入力補完をキャンセル
-  inoremap <expr><C-e> neocomplete#cancel_popup()
 
   " jedi-vimの設定
   autocm FileType python setlocal omnifunc=jedi#completions completeopt-=preview
@@ -212,11 +265,139 @@ let g:quickrun_config = {
     \ "hook/inu/enable" : 1,
     \ "hook/inu/wait" : 20,
     \ "outputter" : "multi:buffer:quickfix",
-    \ "outputter/buffer/split" : ":botright 3sp",
+    \ "outputter/buffer/split" : ":botright 5sp",
     \ "runner" : "vimproc",
     \ "runner/vimproc/updatetime" : 30,
     \ }
   \ }
+
+" vim-gitgutterの設定
+let g:gitgutter_sign_added = '✚'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_removed = '✘'
+
+" lightlineの設定
+let g:lightline = {
+  \ 'colorscheme' : 'powerline',
+  \ 'mode_map': {'c': 'NORMAL'},
+  \ 'active': {
+    \ 'left': [
+      \ [ 'mode', 'paste' ],
+      \ [ 'fugitive', 'filename' ]
+    \ ],
+    \ 'right' : [
+      \ ['lineinfo', 'syntastic'],
+      \ ['percent'],
+      \ ['charcode', 'fileformat', 'fileencoding', 'filetype'],
+    \ ]
+  \ },
+  \ 'component_function': {
+    \ 'modified': 'MyModified',
+    \ 'readonly': 'MyReadonly',
+    \ 'fugitive': 'MyFugitive',
+    \ 'filename': 'MyFilename',
+    \ 'fileformat': 'MyFileformat',
+    \ 'filetype': 'MyFiletype',
+    \ 'fileencoding': 'MyFileencoding',
+    \ 'mode': 'MyMode',
+    \ 'syntastic': 'SyntasticStatuslineFlag',
+    \ 'charcode': 'MyCharCode',
+    \ 'gitgutter': 'MyGitGutter',
+  \ },
+  \ 'separator': {'left': '⮀', 'right': '⮂'},
+  \ 'subseparator': {'left': '⮁', 'right': '⮃'}
+\ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+    \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+    \  &ft == 'unite' ? unite#get_status_string() :
+    \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+    \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+    \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      let _ = fugitive#head()
+      return strlen(_) ? '⭠ '._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth('.') > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth('.') > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyGitGutter()
+  if ! exists('*GitGutterGetHunkSummary') || ! get(g:, 'gitgutter_enabled', 0) || winwidth('.') <= 90
+    return ''
+  endif
+  let symbols = [
+    \ g:gitgutter_sign_added . ' ',
+    \ g:gitgutter_sign_modified . ' ',
+    \ g:gitgutter_sign_removed . ' '
+  \ ]
+  let hunks = GitGutterGetHunkSummary()
+  let ret = []
+  for i in [0, 1, 2]
+    if hunks[i] > 0
+      call add(ret, symbols[i] . hunks[i])
+    endif
+  endfor
+  return join(ret, ' ')
+endfunction
+
+function! MyCharCode()
+  if winwidth('.') <= 70
+    return ''
+  endif
+
+  redir => ascii
+  silent! ascii
+  redir END
+
+  if match(ascii, 'NUL') != -1
+    return 'NUL'
+  endif
+
+  let nrformat = '0x%02x'
+
+  let encoding = (&fenc == '' ? &enc : &fenc)
+
+  if encoding == 'utf-8'
+    let nrformat = '0x%04x'
+  endif
+
+  let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
+
+  let nr = printf(nrformat, nr)
+
+  return "'". char ."' ". nr
+endfunction
 
 " キーマップ設定
 " 文字列検索後のハイライトを解除
@@ -225,6 +406,10 @@ nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<cr><Esc>
 noremap <C-a> ^
 " 行の末尾へ移動
 noremap <C-e> $
+" 終了
+nnoremap q :q<Cr>
+" 終了
+nnoremap qq :qa<Cr>
 " 画面を横分割
 nnoremap <silent> <BAR> :vsplit<Cr>
 " 画面を立て分割
@@ -264,9 +449,18 @@ nnoremap <C-p> gT
 " 置換
 noremap s :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-noremap <silent> ft :VimFilerTab<Cr>
+nnoremap <silent> ft :VimFilerTab<Cr>
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-noremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
+nnoremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
+" 入力補完のキーバインド
+if neobundle#is_installed('neocomplete.vim')
+  " 選択されている候補をEnterキーで入力
+  inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  " 入力補完ウィンドウを閉じる
+  inoremap <expr><C-y> neocomplete#close_popup()
+  " 入力補完をキャンセル
+  inoremap <expr><C-e> neocomplete#cancel_popup()
+endif
 " tabキーで次の検索候補を選択
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " S-tabキーで前の検索候補を選択
@@ -290,10 +484,26 @@ nnoremap <silent>gm :MemoGrep<Cr>
 nnoremap rn :QuickRun 
 " Quickrunの終了(おなじみCtrl+cです）
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+" git status 現在のファイルの状態を取得
+nnoremap st :Gstatus<Cr>
+" git add 変更をステージに追加
+nnoremap ad :Gwrite<Cr>
+" git commit 変更を記録
+nnoremap cm :Gcommit<Cr>
+" git checkout 変更をなかったことに
+nnoremap co :Gread<Cr>
+" git blame ファイルの各行の変更がどのコミットか調べる(バッグった時に，誰の変更可わかるよね！)
+nnoremap lm :Gblame<Cr>
+" git diff HEADとの変更をdiffってくれる
+nnoremap df :Gdiff<Cr>
+" VimShellが起動するよ
+noremap <silent> vs :<C-u>VimShellPop<CR>
 
 " 環境設定
 " カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
-colorscheme molokai
+if neobundle#is_installed('molokai')
+  colorscheme molokai
+endif
 " バックスペースキーを有効化
 set backspace=indent,eol,start
 " タブの文字数
@@ -363,7 +573,7 @@ syntax on
 " カラー設定を256階調で設定
 set t_Co=256
 " ESC打鍵時に，挿入モード離脱までの時間
-set timeoutlen=200
+set timeoutlen=250
 
 " 全角スペースを標示
 function! ZnkakSpace()
