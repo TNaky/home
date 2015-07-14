@@ -32,6 +32,7 @@ if !isdirectory(expand('~/.vim/bundle'))
   q
 endif
 
+
 " Vim 起動時のみ実行
 if has('vim_starting')
   " neobundle で管理するディレクトリを設定
