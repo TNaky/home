@@ -57,3 +57,21 @@ Vim keymapping
 |tg|:Ctags|タグジャンプに必要なtagsファイルを生成|ノーマル|
 |\<C-d\>|\<C-]\>|呼び出し元へジャンプ|ノーマル＋ビジュアル|
 |\<C-b\>|\<C-t\>|ジャンプした先から戻る|ノーマル＋ビジュアル|
+
+# Quickrun(エディタ上からプログラムを実行)
+|キー|デフォルト|機能|モード|
+|:---:|:---:|:---:|:---:|
+|rn|:Quickrun |プログラムを実行|ノーマル|
+|\<C-c\>||Quickrunを停止|ノーマル|
+
+# Git連携
+|キー|デフォルト|機能|モード|
+|:---:|:---:|:---:|:---:|
+|st|:Gstatus\<Cr\>|git status|ノーマル|
+|ad|:Gwrite|<Cr\>|git add|ノーマル|
+|cm|:Gcommit\<Cr\>|git commit|ノーマル|
+|co|:Gread\<Cr\>|git checkout|ノーマル|
+|bm|:Gblame\<Cr\>|git blame|ノーマル|
+|df|:Gdiff\<Cr\>|git diff|ノーマル|
+|ps|:Git push|git push|ノーマル|
+
