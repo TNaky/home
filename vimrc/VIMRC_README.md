@@ -45,6 +45,15 @@ brew install --powerline --vim-powerline ricty
 cp -f /usr/local/Cellar/ricty/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
 ```
 
+使っているTerminalなりiTermなりのフォントにインストールしたPowerlineFontを設定してください．
+#### iTerm
+Preferences... > Profiles > Text
+
+|Type|Font|Size|
+|:---:|:---:|:---:|
+|Regular Font|Ricty Regular for Powerline|20|
+|Non-ASCII Font|Ricty Regular for Powerline|18|
+
 ## syntastic利用のために
 syntasticは，プログラムソースのファイル保存時にシンタックスチェックを実施するプラグインです．
 
