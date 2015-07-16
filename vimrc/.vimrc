@@ -24,14 +24,13 @@
 
 " プラグイン設定
 " NeoBundle が無ければインストール
-if !isdirectory(expand('~/.vim/bundle'))
-  !mkdir -p ~/.vim/bundle
-  !git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/bundle/neobundle.vim
-  source ~/.vimrc
+if !isdirectory(expand('$HOME/.vim/bundle'))
+  !mkdir -p $HOME/.vim/bundle
+  !git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
+  source $HOME/.vimrc
   NeoBundleInstall
   q
 endif
-
 
 " Vim 起動時のみ実行
 if has('vim_starting')
@@ -170,15 +169,15 @@ if neobundle#is_installed('neocomplete.vim')
   " Neocompleteを有効化
   let g:neocomplete#enable_at_startup = 1
   " 補完が自動で開始される文字数
-  let g:neocomplete#auto_completion_start_length = 3
+  let g:neocomplete#auto_completion_start_length = 2
   " Smart caseを有効化（大文字が入力されるまで，大文字小文字の区別を考慮しない）
   let g:neocomplete#enable_smart_case = 1
   " camle caseを有効化（大文字を区切りとしたワイルドカードのように振る舞う）
   let g:neocomplete#enable_camel_case_completion = 1
   " アンダーバー区切りの補完を有効化
   let g:neocomplete#enable_underbar_completion = 1
-  " シンタックスをキャッシュするときの最大文字長を10に設定
-  let g:neocomplete#min_syntax_length = 10
+  " シンタックスをキャッシュするときの最大文字長を25に設定
+  let g:neocomplete#min_syntax_length = 25
   " neocomplete を自動的にロックするバッファ名のパターン
   let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
   " ハイフンの入力による候補番号の標示
@@ -219,6 +218,11 @@ elseif neobundle#is_installed('neocomplcache')
   let g:neocomplcache_keyword_patterns._ = '\h\w*'
   let g:neocomplcache_enable_camel_case_completion = 1
   let g:neocomplcache_enable_underbar_completion = 1
+endif
+
+" NeoSnippetの設定
+if has('conceal')
+  set conceallevel=2 concealcursor=i
 endif
 
 " いわゆるタグジャンプについての設定(auto-ctagsの設定なわけだが)
@@ -415,6 +419,8 @@ noremap <C-e> $
 nnoremap q :q<Cr>
 " 終了
 nnoremap qq :qa<Cr>
+" 保存
+noremap w :w<Cr>
 " 画面を横分割
 nnoremap <silent> <BAR> :vsplit<Cr>
 " 画面を立て分割
@@ -458,6 +464,10 @@ nnoremap <silent> ft :VimFilerTab<Cr>
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
 nnoremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " 入力補完のキーバインド
+" tabキーで次の検索候補を選択
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" S-tabキーで前の検索候補を選択
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 if neobundle#is_installed('neocomplete.vim')
   " 選択されている候補をEnterキーで入力
   inoremap <expr><Cr> pumvisible() ? neocomplete#close_popup() : "\<Cr>"
@@ -466,10 +476,6 @@ if neobundle#is_installed('neocomplete.vim')
   " 入力補完をキャンセル
   inoremap <expr><C-e> neocomplete#cancel_popup()
 endif
-" tabキーで次の検索候補を選択
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" S-tabキーで前の検索候補を選択
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " スニペット補完のキーマップ
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
