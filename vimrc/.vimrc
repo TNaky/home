@@ -624,6 +624,8 @@ syntax on
 set t_Co=256
 " ESC打鍵時に，挿入モード離脱までの時間
 set timeoutlen=250
+" コメントの色変更
+hi Comment ctermfg=Brown
 
 " 全角スペースを標示
 function! ZnkakSpace()
