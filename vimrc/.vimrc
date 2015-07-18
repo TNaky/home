@@ -102,8 +102,12 @@ if has('vim_starting')
   NeoBundle "osyo-manga/unite-quickfix"
   " QuickRun実行中に，ほんとに実行してるの？ってならないようにするアニメーション
   NeoBundle 'osyo-manga/shabadou.vim'
-  " Vim上でlatexをコンパイルやらをするためのプラグイン
-  " NeoBundle 'vim-latex/vim-latex'
+  " LaTeXのコンパイルやオムニ補完をするプラグインです
+  if executable('latexmk')
+    NeoBundle 'lervag/vimtex'
+  else
+    echo "Please install a latexmk"
+  endif
   " Git
   NeoBundle 'tpope/vim-fugitive'
   " Gitの差分を教えてくれるやつ
@@ -124,6 +128,8 @@ if has('vim_starting')
   \ }
   " VimShellでssh
   NeoBundle 'ujihisa/vimshell-ssh'
+  " コメントアウトをしてくれるよ
+  NeoBundle 'tomtom/tcomment_vim'
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -278,6 +284,40 @@ let g:quickrun_config = {
     \ }
   \ }
 
+" LaTeX作成支援
+" LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
+if executable('latexmk')
+  if !filereadable(expand('$HOME/.latexmkrc'))
+    " 設定ファイルが無い場合生成して，設定内容を書込
+    :let outputfile = '$HOME/.latexmkrc'
+    :execute ':redir! > ' . outputfile
+      :silent! echon "$latex='platex -kanji=utf8 -guess-input-enc -synctex=1 -interaction=nonstopmode %S';" . "\n"
+      :silent! echon "$dvipdf='dvipdfmx  %S';" . "\n"
+      :silent! echon "$bibtex='pbibtex -kanji=utf8 %B';"
+    :redir END
+  endif
+  " texファイルコンパイルの際に設定される引数
+  let g:latex_latexmk_options = '-pdfdvi'
+  " コンパイル完了時のError標示をOFF
+  let g:latex_latexmk_callback = 0
+  " texコードの折りたたみをOFF
+  let g:latex_fold_enabled = 0
+  
+  " texファイルをQuickRunでコンパイルする際の設定
+  let g:quickrun_config['tex'] = {
+    \ 'command' : 'latexmk',
+    \ 'outputter' : 'error',
+    \ 'outputter/error/error' : 'quickfix',
+    \ 'cmdopt': '-pdfdvi',
+    \ 'exec': ['%c %o %s']
+  \ }
+endif
+
+" tcomment.vimの設定(編集すると，コメントアウトしてくれるファイルタイプが増やせます)
+if !exists('g:tcomment_types')
+  let g:tcomment_types = {}
+endif
+
 " vim-gitgutterの設定
 let g:gitgutter_sign_added = '✚'
 let g:gitgutter_sign_modified = '➜'
@@ -382,27 +422,19 @@ function! MyCharCode()
   if winwidth('.') <= 70
     return ''
   endif
-
   redir => ascii
   silent! ascii
   redir END
-
   if match(ascii, 'NUL') != -1
     return 'NUL'
   endif
-
   let nrformat = '0x%02x'
-
   let encoding = (&fenc == '' ? &enc : &fenc)
-
   if encoding == 'utf-8'
     let nrformat = '0x%04x'
   endif
-
   let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
-
   let nr = printf(nrformat, nr)
-
   return "'". char ."' ". nr
 endfunction
 
@@ -511,6 +543,9 @@ nnoremap df :Gdiff<Cr>
 nnoremap ps :Git push<Cr>
 " VimShellが起動するよ
 noremap <silent> vs :<C-u>VimShellPop<Cr>
+" latexmkを利用してtexをコンパイルします
+noremap <C-/> :TComment<Cr>
+
 
 " 環境設定
 " カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
