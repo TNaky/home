@@ -102,12 +102,6 @@ if has('vim_starting')
   NeoBundle "osyo-manga/unite-quickfix"
   " QuickRun実行中に，ほんとに実行してるの？ってならないようにするアニメーション
   NeoBundle 'osyo-manga/shabadou.vim'
-  " LaTeXのコンパイルやオムニ補完をするプラグインです
-  if executable('latexmk')
-    NeoBundle 'lervag/vimtex'
-  else
-    echo "Please install a latexmk"
-  endif
   " Git
   NeoBundle 'tpope/vim-fugitive'
   " Gitの差分を教えてくれるやつ
@@ -130,6 +124,8 @@ if has('vim_starting')
   NeoBundle 'ujihisa/vimshell-ssh'
   " コメントアウトをしてくれるよ
   NeoBundle 'tomtom/tcomment_vim'
+  " LaTeXの文書作成支援プラグイン
+  NeoBundle 'lervag/vim-latex'
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -285,23 +281,22 @@ let g:quickrun_config = {
   \ }
 
 " LaTeX作成支援
-" LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
+" latexmkがインストールされてるかどうか
 if executable('latexmk')
+  " LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
   if !filereadable(expand('$HOME/.latexmkrc'))
     " 設定ファイルが無い場合生成して，設定内容を書込
     :let outputfile = '$HOME/.latexmkrc'
     :execute ':redir! > ' . outputfile
-      :silent! echon "$latex='platex -kanji=utf8 -guess-input-enc -synctex=1 -interaction=nonstopmode %S';" . "\n"
-      :silent! echon "$dvipdf='dvipdfmx  %S';" . "\n"
-      :silent! echon "$bibtex='pbibtex -kanji=utf8 %B';"
+      :silent! echon "$latex = 'platex -synctex=1 -halt-on-error';" . "\n"
+      :silent! echon "$latex_silent = 'platex -synctex=1 -halt-on-error -interaction=batchmode';" . "\n"
+      :silent! echon "$bibtex = 'pbibtex';" . "\n"
+      :silent! echon "$dvipdf = 'dvipdfmx %O -o %D %S';" . "\n"
+      :silent! echon "$makeindex = 'mendex %O -o %D %S';" . "\n"
+      :silent! echon "$pdf_mode = 3;" . "\n"
+      :silent! echon "$pvc_view_file_via_temporary = 0;" . "\n"
     :redir END
   endif
-  " texファイルコンパイルの際に設定される引数
-  let g:latex_latexmk_options = '-pdfdvi'
-  " コンパイル完了時のError標示をOFF
-  let g:latex_latexmk_callback = 0
-  " texコードの折りたたみをOFF
-  let g:latex_fold_enabled = 0
   
   " texファイルをQuickRunでコンパイルする際の設定
   let g:quickrun_config['tex'] = {
@@ -312,6 +307,8 @@ if executable('latexmk')
     \ 'exec': ['%c %o %s']
   \ }
 endif
+" Vim-latexの設定
+let g:latex_fold_enabled = 0
 
 " tcomment.vimの設定(編集すると，コメントアウトしてくれるファイルタイプが増やせます)
 if !exists('g:tcomment_types')
@@ -545,8 +542,8 @@ nnoremap df :Gdiff<Cr>
 nnoremap ps :Git push<Cr>
 " VimShellが起動するよ
 noremap <silent> vs :<C-u>VimShellPop<Cr>
-" latexmkを利用してtexをコンパイルします
-noremap <C-/> :TComment<Cr>
+" 2回押しで選択行をコメントアウトしてくれます
+noremap <silent> <C-/> :TComment<Cr>
 
 
 " 環境設定
@@ -625,7 +622,7 @@ set t_Co=256
 " ESC打鍵時に，挿入モード離脱までの時間
 set timeoutlen=250
 
-" 全角スペースを標示
+" 全角スペースを表示
 function! ZnkakSpace()
   highlight ZnkakSpace cterm=underline ctermfg=grey gui=underline guifg=grey
 endfunction
