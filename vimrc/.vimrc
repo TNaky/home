@@ -574,7 +574,9 @@ set fileformats=unix,dos,mac
 " 行番号標示
 set number
 " マウス入力を有効化
-set mouse=a
+if has('mouse')
+  set mouse=a
+endif
 " TERM環境変数の値
 set ttymouse=xterm2
 " インクリメンタルサーチを有効化
@@ -621,6 +623,9 @@ syntax on
 set t_Co=256
 " ESC打鍵時に，挿入モード離脱までの時間
 set timeoutlen=250
+" ビープ音を鳴らさない
+set visualbell
+set vb t_vb=
 
 " 全角スペースを表示
 function! ZnkakSpace()
