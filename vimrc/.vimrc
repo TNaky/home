@@ -627,7 +627,7 @@ set timeoutlen=250
 set visualbell
 set vb t_vb=
 " コメントの色変更
-hi Comment ctermfg=Brown
+hi Comment ctermfg=Gray
 
 " 全角スペースを表示
 function! ZnkakSpace()
