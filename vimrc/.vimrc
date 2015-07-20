@@ -514,8 +514,6 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 nnoremap <silent><Leader>tg :Ctags
 " タグジャンプしますよ
 noremap <C-d> <C-]>
-" ジャンプ先から戻りますよ
-noremap <C-b> <C-t>
 " メモを新規作成
 nnoremap <silent>mn :call MemoNew()<Cr>
 " メモをリスト表示
