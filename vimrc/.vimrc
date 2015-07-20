@@ -626,6 +626,8 @@ set timeoutlen=250
 " ビープ音を鳴らさない
 set visualbell
 set vb t_vb=
+" コメントの色変更
+hi Comment ctermfg=Brown
 
 " 全角スペースを表示
 function! ZnkakSpace()
