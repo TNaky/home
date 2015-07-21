@@ -60,7 +60,7 @@ Vim keymapping
 |ad|:Gwrite\<Cr\>|git add|ノーマル|
 |cm|:Gcommit\<Cr\>|git commit|ノーマル|
 |co|:Gread\<Cr\>|git checkout|ノーマル|
-|bm|:Gblame\<Cr\>|git blame|ノーマル|
+|lm|:Gblame\<Cr\>|git blame|ノーマル|
 |df|:Gdiff\<Cr\>|git diff|ノーマル|
 |ps|:Git push|git push|ノーマル|
 
