@@ -130,9 +130,6 @@ if has('vim_starting')
   NeoBundle 'open-browser.vim'
   " markdown記法をゴニョゴニョしてくれる
   NeoBundle 'plasticboy/vim-markdown'
-  " markdownを表示してくれるよ
-  NeoBundle 'tukiyo/previm'
-
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -286,6 +283,10 @@ let g:quickrun_config = {
     \ "runner/vimproc/updatetime" : 30,
     \ }
   \ }
+
+" Markdown記法関連の設定
+au BufRead,BufNewFile *.md set filetype=markdown
+let g:previm_open_cmd = 'open -a Firefox'
 
 " LaTeX作成支援
 " latexmkがインストールされてるかどうか
