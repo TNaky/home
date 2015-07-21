@@ -126,6 +126,13 @@ if has('vim_starting')
   NeoBundle 'tomtom/tcomment_vim'
   " LaTeXの文書作成支援プラグイン
   NeoBundle 'lervag/vim-latex'
+  " ブラウザ開くよ(GUIが無いと駄目だよ)
+  NeoBundle 'open-browser.vim'
+  " markdown記法をゴニョゴニョしてくれる
+  NeoBundle 'plasticboy/vim-markdown'
+  " markdownを表示してくれるよ
+  NeoBundle 'tukiyo/previm'
+
 
   " 以下カラースキーム
   " olarized カラースキーム
