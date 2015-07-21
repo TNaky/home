@@ -322,6 +322,16 @@ endif
 " Vim-latexの設定
 let g:latex_fold_enabled = 0
 
+" Graphvizをコンパイルする
+if executable('dot')
+  let g:quickrun_config['dot'] = {
+    \ 'command' : 'dot',
+    \ 'outputter' : 'error',
+    \ 'outputter/error/error' : 'quickfix',
+    \ 'cmdopt' : '-Tpdf -o ' . expand('%:r') . '.pdf',
+  \ }
+endif
+
 " tcomment.vimの設定(編集すると，コメントアウトしてくれるファイルタイプが増やせます)
 if !exists('g:tcomment_types')
   let g:tcomment_types = {}
