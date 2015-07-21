@@ -288,6 +288,10 @@ let g:quickrun_config = {
 au BufRead,BufNewFile *.md set filetype=markdown
 let g:previm_open_cmd = 'open -a Firefox'
 
+" Syntasticの設定
+" LaTeXでのチェックが厳しすぎるからOffに
+let g:syntastic_ignore_files=['\.tex$']
+
 " LaTeX作成支援
 " latexmkがインストールされてるかどうか
 if executable('latexmk')
