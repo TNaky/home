@@ -175,7 +175,7 @@ if neobundle#is_installed('neocomplete.vim')
   " Neocompleteを有効化
   let g:neocomplete#enable_at_startup = 1
   " 補完が自動で開始される文字数
-  let g:neocomplete#auto_completion_start_length = 2
+  let g:neocomplete#auto_completion_start_length = 1
   " Smart caseを有効化（大文字が入力されるまで，大文字小文字の区別を考慮しない）
   let g:neocomplete#enable_smart_case = 1
   " camle caseを有効化（大文字を区切りとしたワイルドカードのように振る舞う）
@@ -328,7 +328,7 @@ if executable('dot')
     \ 'command' : 'dot',
     \ 'outputter' : 'error',
     \ 'outputter/error/error' : 'quickfix',
-    \ 'cmdopt' : '-Tpdf -o ' . expand('%:r') . '.pdm',
+    \ 'cmdopt' : '-Tpdf -o ' . expand('%:r') . '.pdf',
   \ }
 endif
 
