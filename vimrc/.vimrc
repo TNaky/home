@@ -328,7 +328,7 @@ if executable('dot')
     \ 'command' : 'dot',
     \ 'outputter' : 'error',
     \ 'outputter/error/error' : 'quickfix',
-    \ 'cmdopt' : '-Tpng -o ' . expand('%:r') . '.png',
+    \ 'cmdopt' : '-Tpdf -o ' . expand('%:r') . '.pdf',
   \ }
 endif
 
