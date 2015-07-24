@@ -561,7 +561,7 @@ nnoremap df :Gdiff<Cr>
 " git fetch フェッチしてくれる
 nnoremap fc :Gfetch<Cr>
 " 標準で設定されているサーバにpushします
-nnoremap ps :Git push<Cr>
+nnoremap ps :Gpush<Cr>
 " VimShellが起動するよ
 noremap <silent> vs :<C-u>VimShellPop<Cr>
 " 2回押しで選択行をコメントアウトしてくれます
