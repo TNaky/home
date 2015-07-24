@@ -558,6 +558,8 @@ nnoremap co :Gread<Cr>
 nnoremap lm :Gblame<Cr>
 " git diff HEADとの変更をdiffってくれる
 nnoremap df :Gdiff<Cr>
+" git fetch フェッチしてくれる
+nnoremap fc :Gfetch<Cr>
 " 標準で設定されているサーバにpushします
 nnoremap ps :Git push<Cr>
 " VimShellが起動するよ
