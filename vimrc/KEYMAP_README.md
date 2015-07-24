@@ -62,7 +62,8 @@ Vim keymapping
 |co|:Gread\<Cr\>|git checkout|ノーマル|
 |lm|:Gblame\<Cr\>|git blame|ノーマル|
 |df|:Gdiff\<Cr\>|git diff|ノーマル|
-|ps|:Git push|git push|ノーマル|
+|ps|:Gpush|git push|ノーマル|
+|fc|:Gfetch|git fetch|ノーマル|
 
 # その他キーマップ
 |キー|デフォルト|機能|モード|
