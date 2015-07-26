@@ -130,6 +130,8 @@ if has('vim_starting')
   NeoBundle 'open-browser.vim'
   " markdown記法をゴニョゴニョしてくれる
   NeoBundle 'plasticboy/vim-markdown'
+  " Processing のシンタックスハイライト＆リファレンス参照用
+  NeoBundle 'sophacles/vim-processing'
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -283,6 +285,11 @@ let g:quickrun_config = {
     \ "runner/vimproc/updatetime" : 30,
     \ }
   \ }
+
+let g:quickrun_config.processing = {
+  \ 'command': 'processing-java',
+  \ 'exec': '%c --sketch=%s:p:h/ --output=/tmp/processing --run --force'
+\ }
 
 " Markdown記法関連の設定
 au BufRead,BufNewFile *.md set filetype=markdown
