@@ -469,6 +469,12 @@ endfunction
 noremap ; :
 " 文字列検索後のハイライトを解除
 noremap <silent> <Esc><Esc> :<C-u>nohlsearch<Cr><Esc>
+" 数値のインクリメント
+nnoremap <C-i> <C-a>
+" 数値のインクリメント
+vnoremap <C-i> <C-a>gv
+" 数値のデクリメント
+vnoremap <C-x> <C-x>gv
 " 行の先頭へ移動
 noremap <C-a> ^
 " 行の末尾へ移動
