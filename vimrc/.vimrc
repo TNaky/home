@@ -272,7 +272,7 @@ if executable('ctags')
   " LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
   if !filereadable(expand('$HOME/.ctags'))
     " 設定ファイルが無い場合生成して，設定内容を書込
-    :let outputfile = '$HOME/.latexmkrc'
+    :let outputfile = '$HOME/.ctags'
     :execute ':redir! > ' . outputfile
       :silent! echon "--sort=yes" . "\n"
       :silent! echon "--input-encoding=utf-8" . "\n"
