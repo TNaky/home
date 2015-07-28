@@ -542,7 +542,9 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 " タグジャンプに必要なtagファイルを生成
 nnoremap <silent><Leader>tg :Ctags
 " タグジャンプしますよ
-noremap <C-d> <C-]>
+noremap tj <C-]>
+" タグジャンプ戻りますよ
+noremap tb <C-t>
 " メモを新規作成
 nnoremap <silent>mn :call MemoNew()<Cr>
 " メモをリスト表示
