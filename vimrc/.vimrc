@@ -1,4 +1,4 @@
-" Vimの設定ファイル(.vimrc)
+" Vmの設定ファイル(.vimrc)
 " author  : TNak
 " since   : 2015.04.01
 
@@ -268,8 +268,24 @@ function! MemoNew()
   :MemoNew
 endfunction
 
-" QuickRunの設定
-" QuickRun実行時に渡されるオプション群
+" タグジャンプの設定
+" ctagsインストールされている？
+if expand('ctags')
+  " ctagsの設定ファイルある？
+  if !filereadable(expand('$HOME/.ctags'))
+    :let outputfile = '$HOME/.ctags'
+    :execute ':redir! > ' . outputfile
+      :silent! echon "--sort=yes" . "\n"
+      :silent! echon "--input-encoding=utf-8" . "\n"
+      :silent! echon "--input-encoding-c=sjis" . "\n"
+      :silent! echon "--input-encoding-vim=utf-8" . "\n"
+      :silent! echon "--input-encoding-go=utf-8" . "\n"
+    :redir end
+  endif
+endif
+
+" quickrunの設定
+" quickrun実行時に渡されるオプション群
 let g:quickrun_config = {
   \ "_" : {
     \ "hook/unite_quickfix/enable_failure" : 1,
@@ -291,33 +307,33 @@ let g:quickrun_config.processing = {
   \ 'exec': '%c --sketch=%s:p:h/ --output=/tmp/processing --run --force'
 \ }
 
-" Markdown記法関連の設定
-au BufRead,BufNewFile *.md set filetype=markdown
-let g:previm_open_cmd = 'open -a Firefox'
+" markdown記法関連の設定
+au bufread,bufnewfile *.md set filetype=markdown
+let g:previm_open_cmd = 'open -a firefox'
 
-" Syntasticの設定
-" LaTeXでのチェックが厳しすぎるからOffに
+" syntasticの設定
+" latexでのチェックが厳しすぎるからoffに
 let g:syntastic_ignore_files=['\.tex$']
 
-" LaTeX作成支援
+" latex作成支援
 " latexmkがインストールされてるかどうか
 if executable('latexmk')
-  " LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
-  if !filereadable(expand('$HOME/.latexmkrc'))
+  " latexでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
+  if !filereadable(expand('$home/.latexmkrc'))
     " 設定ファイルが無い場合生成して，設定内容を書込
-    :let outputfile = '$HOME/.latexmkrc'
+    :let outputfile = '$home/.latexmkrc'
     :execute ':redir! > ' . outputfile
       :silent! echon "$latex = 'platex -synctex=1 -halt-on-error';" . "\n"
       :silent! echon "$latex_silent = 'platex -synctex=1 -halt-on-error -interaction=batchmode';" . "\n"
       :silent! echon "$bibtex = 'pbibtex';" . "\n"
-      :silent! echon "$dvipdf = 'dvipdfmx %O -o %D %S';" . "\n"
-      :silent! echon "$makeindex = 'mendex %O -o %D %S';" . "\n"
+      :silent! echon "$dvipdf = 'dvipdfmx %o -o %d %s';" . "\n"
+      :silent! echon "$makeindex = 'mendex %o -o %d %s';" . "\n"
       :silent! echon "$pdf_mode = 3;" . "\n"
       :silent! echon "$pvc_view_file_via_temporary = 0;" . "\n"
-    :redir END
+    :redir end
   endif
   
-  " texファイルをQuickRunでコンパイルする際の設定
+  " texファイルをquickrunでコンパイルする際の設定
   let g:quickrun_config['tex'] = {
     \ 'command' : 'latexmk',
     \ 'outputter' : 'error',
@@ -326,16 +342,16 @@ if executable('latexmk')
     \ 'exec': ['%c %o %s']
   \ }
 endif
-" Vim-latexの設定
+" vim-latexの設定
 let g:latex_fold_enabled = 0
 
-" Graphvizをコンパイルする
+" graphvizをコンパイルする
 if executable('dot')
   let g:quickrun_config['dot'] = {
     \ 'command' : 'dot',
     \ 'outputter' : 'error',
     \ 'outputter/error/error' : 'quickfix',
-    \ 'cmdopt' : '-Tpdf -o ' . expand('%:r') . '.pdf',
+    \ 'cmdopt' : '-tpdf -o ' . expand('%:r') . '.pdf',
   \ }
 endif
 
@@ -352,7 +368,7 @@ let g:gitgutter_sign_removed = '✘'
 " lightlineの設定
 let g:lightline = {
   \ 'colorscheme' : 'powerline',
-  \ 'mode_map': {'c': 'NORMAL'},
+  \ 'mode_map': {'c': 'normal'},
   \ 'active': {
     \ 'left': [
       \ [ 'mode', 'paste' ],
@@ -365,40 +381,40 @@ let g:lightline = {
     \ ]
   \ },
   \ 'component_function': {
-    \ 'modified': 'MyModified',
-    \ 'readonly': 'MyReadonly',
-    \ 'fugitive': 'MyFugitive',
-    \ 'filename': 'MyFilename',
-    \ 'fileformat': 'MyFileformat',
-    \ 'filetype': 'MyFiletype',
-    \ 'fileencoding': 'MyFileencoding',
-    \ 'mode': 'MyMode',
-    \ 'syntastic': 'SyntasticStatuslineFlag',
-    \ 'charcode': 'MyCharCode',
-    \ 'gitgutter': 'MyGitGutter',
+    \ 'modified': 'mymodified',
+    \ 'readonly': 'myreadonly',
+    \ 'fugitive': 'myfugitive',
+    \ 'filename': 'myfilename',
+    \ 'fileformat': 'myfileformat',
+    \ 'filetype': 'myfiletype',
+    \ 'fileencoding': 'myfileencoding',
+    \ 'mode': 'mymode',
+    \ 'syntastic': 'syntasticstatuslineflag',
+    \ 'charcode': 'mycharcode',
+    \ 'gitgutter': 'mygitgutter',
   \ },
   \ 'separator': {'left': '⮀', 'right': '⮂'},
   \ 'subseparator': {'left': '⮁', 'right': '⮃'}
 \ }
 
-function! MyModified()
+function! mymodified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-function! MyReadonly()
+function! myreadonly()
   return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
 endfunction
 
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+function! myfilename()
+  return ('' != myreadonly() ? myreadonly() . ' ' : '') .
     \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
     \  &ft == 'unite' ? unite#get_status_string() :
     \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-    \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-    \ ('' != MyModified() ? ' ' . MyModified() : '')
+    \ '' != expand('%:t') ? expand('%:t') : '[no name]') .
+    \ ('' != mymodified() ? ' ' . mymodified() : '')
 endfunction
 
-function! MyFugitive()
+function! myfugitive()
   try
     if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
       let _ = fugitive#head()
@@ -409,24 +425,24 @@ function! MyFugitive()
   return ''
 endfunction
 
-function! MyFileformat()
+function! myfileformat()
   return winwidth('.') > 70 ? &fileformat : ''
 endfunction
 
-function! MyFiletype()
+function! myfiletype()
   return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
-function! MyFileencoding()
+function! myfileencoding()
   return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
-function! MyMode()
+function! mymode()
   return winwidth('.') > 60 ? lightline#mode() : ''
 endfunction
 
-function! MyGitGutter()
-  if ! exists('*GitGutterGetHunkSummary') || ! get(g:, 'gitgutter_enabled', 0) || winwidth('.') <= 90
+function! mygitgutter()
+  if ! exists('*gitguttergethunksummary') || ! get(g:, 'gitgutter_enabled', 0) || winwidth('.') <= 90
     return ''
   endif
   let symbols = [
@@ -434,7 +450,7 @@ function! MyGitGutter()
     \ g:gitgutter_sign_modified . ' ',
     \ g:gitgutter_sign_removed . ' '
   \ ]
-  let hunks = GitGutterGetHunkSummary()
+  let hunks = gitguttergethunksummary()
   let ret = []
   for i in [0, 1, 2]
     if hunks[i] > 0
@@ -444,15 +460,15 @@ function! MyGitGutter()
   return join(ret, ' ')
 endfunction
 
-function! MyCharCode()
+function! mycharcode()
   if winwidth('.') <= 70
     return ''
   endif
   redir => ascii
   silent! ascii
-  redir END
-  if match(ascii, 'NUL') != -1
-    return 'NUL'
+  redir end
+  if match(ascii, 'nul') != -1
+    return 'nul'
   endif
   let nrformat = '0x%02x'
   let encoding = (&fenc == '' ? &enc : &fenc)
@@ -468,121 +484,121 @@ endfunction
 " コマンド入力をセミコロンでも可
 noremap ; :
 " 文字列検索後のハイライトを解除
-noremap <silent> <Esc><Esc> :<C-u>nohlsearch<Cr><Esc>
+noremap <silent> <esc><esc> :<c-u>nohlsearch<cr><esc>
 " 数値のインクリメント
-nnoremap <C-i> <C-a>
+nnoremap <c-i> <c-a>
 " 数値のインクリメント
-vnoremap <C-i> <C-a>gv
+vnoremap <c-i> <c-a>gv
 " 数値のデクリメント
-vnoremap <C-x> <C-x>gv
+vnoremap <c-x> <c-x>gv
 " 行の先頭へ移動
-noremap <C-a> ^
+noremap <c-a> ^
 " 行の末尾へ移動
-noremap <C-e> $
+noremap <c-e> $
 " 終了
-nnoremap q :q<Cr>
+nnoremap q :q<cr>
 " 終了
-nnoremap qq :qa<Cr>
+nnoremap qq :qa<cr>
 " 保存
-nnoremap w :w<Cr>
+nnoremap w :w<cr>
 " 画面を横分割
-nnoremap <silent> <BAR> :vsplit<Cr>
+nnoremap <silent> <bar> :vsplit<cr>
 " 画面を立て分割
-nnoremap <silent> - :split<Cr>
+nnoremap <silent> - :split<cr>
 " 上の画面へ移動
-nnoremap <C-k> <C-w>k
+nnoremap <c-k> <c-w>k
 " 下の画面へ移動
-nnoremap <C-j> <C-w>j
+nnoremap <c-j> <c-w>j
 " 右の画面へ移動
-nnoremap <C-l> <C-w>l
+nnoremap <c-l> <c-w>l
 " 左の画面へ移動
-nnoremap <C-h> <C-w>h
+nnoremap <c-h> <c-w>h
 " 上の画面と入れ替え
-nnoremap wk <C-w>K
+nnoremap wk <c-w>k
 " 下の画面と入れ替え
-nnoremap wj <C-w>J
+nnoremap wj <c-w>j
 " 右の画面と入れ替え
-nnoremap wl <C-w>L
+nnoremap wl <c-w>l
 " 左の画面と入れ替え
-nnoremap wh <C-w>H
+nnoremap wh <c-w>h
 " 画面幅を均等にします
-nnoremap = <C-w>=
+nnoremap = <c-w>=
 " 画面幅を増やします
-nnoremap > <C-w>>
+nnoremap > <c-w>>
 " 画面幅を減らします
-nnoremap < <C-w><
+nnoremap < <c-w><
 " 画面の高さを上げます
-nnoremap ^ <C-w>+
+nnoremap ^ <c-w>+
 " 画面の高さを下げます(アンダーバーだぞ! ハイフンじゃないぞ!!）
-nnoremap _ <C-w>-
+nnoremap _ <c-w>-
 " 新規タブを作成
-nnoremap <C-t> :tabnew<Cr>
+nnoremap <c-t> :tabnew<cr>
 " 次のタブへ移動
-nnoremap <C-n> gt
+nnoremap <c-n> gt
 " 前のタブへ移動
-nnoremap <C-p> gT
+nnoremap <c-p> gt
 " 置換
 noremap s :%s/
-" Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-nnoremap <silent> ft :VimFilerTab<Cr>
-" Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-nnoremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
+" filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
+nnoremap <silent> ft :vimfilertab<cr>
+" filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
+nnoremap <silent> fo :vimfiler -split -winwidth=30 -simple -toggle<cr>
 " 入力補完のキーバインド
 " tabキーで次の検索候補を選択
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" S-tabキーで前の検索候補を選択
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" s-tabキーで前の検索候補を選択
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 if neobundle#is_installed('neocomplete.vim')
-  " 選択されている候補をEnterキーで入力
-  inoremap <expr><Cr> pumvisible() ? neocomplete#close_popup() : "\<Cr>"
+  " 選択されている候補をenterキーで入力
+  inoremap <expr><cr> pumvisible() ? neocomplete#close_popup() : "\<cr>"
   " 入力補完ウィンドウを閉じる
-  inoremap <expr><C-y> neocomplete#close_popup()
+  inoremap <expr><c-y> neocomplete#close_popup()
   " 入力補完をキャンセル
-  inoremap <expr><C-e> neocomplete#cancel_popup()
+  inoremap <expr><c-e> neocomplete#cancel_popup()
 endif
 " スニペット補完のキーマップ
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <c-k> <plug>(neosnippet_expand_or_jump)
+xmap <c-k> <plug>(neosnippet_expand_target)
 " タグジャンプに必要なtagファイルを生成
-nnoremap <silent><Leader>tg :Ctags
+nnoremap <silent><leader>tg :ctags
 " タグジャンプしますよ
-noremap tj <C-]>
+noremap tj <c-]>
 " タグジャンプ戻りますよ
-noremap tb <C-t>
+noremap tb <c-t>
 " メモを新規作成
-nnoremap <silent>mn :call MemoNew()<Cr>
+nnoremap <silent>mn :call memonew()<cr>
 " メモをリスト表示
-nnoremap <silent>ml :MemoList<Cr>
+nnoremap <silent>ml :memolist<cr>
 " メモをgrep検索
-nnoremap <silent>gm :MemoGrep<Cr>
-" Quickrunを実行（要するにIEDとかにあるRunです）
-nnoremap rn :QuickRun 
-" Quickrunの終了(おなじみCtrl+cです）
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+nnoremap <silent>gm :memogrep<cr>
+" quickrunを実行（要するにiedとかにあるrunです）
+nnoremap rn :quickrun 
+" quickrunの終了(おなじみctrl+cです）
+nnoremap <expr><silent> <c-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<c-c>"
 " git status 現在のファイルの状態を取得
-nnoremap st :Gstatus<Cr>
+nnoremap st :gstatus<cr>
 " git add 変更をステージに追加
-nnoremap ad :Gwrite<Cr>
+nnoremap ad :gwrite<cr>
 " git commit 変更を記録
-nnoremap cm :Gcommit<Cr>
+nnoremap cm :gcommit<cr>
 " git checkout 変更をなかったことに
-nnoremap co :Gread<Cr>
+nnoremap co :gread<cr>
 " git blame ファイルの各行の変更がどのコミットか調べる(バッグった時に，誰の変更可わかるよね！)
-nnoremap lm :Gblame<Cr>
-" git diff HEADとの変更をdiffってくれる
-nnoremap df :Gdiff<Cr>
+nnoremap lm :gblame<cr>
+" git diff headとの変更をdiffってくれる
+nnoremap df :gdiff<cr>
 " git fetch フェッチしてくれる
-nnoremap fc :Gfetch<Cr>
+nnoremap fc :gfetch<cr>
 " 標準で設定されているサーバにpushします
-nnoremap ps :Gpush<Cr>
-" VimShellが起動するよ
-noremap <silent> vs :<C-u>VimShellPop<Cr>
+nnoremap ps :gpush<cr>
+" vimshellが起動するよ
+noremap <silent> vs :<c-u>vimshellpop<cr>
 " 2回押しで選択行をコメントアウトしてくれます
-noremap <silent> <C-/> :TComment<Cr>
+noremap <silent> <c-/> :tcomment<cr>
 
 
 " 環境設定
-" カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
+" カラースキーマを設定(:unite colorscheme -auto-preview => 良さそうなのを選ぶ)
 if neobundle#is_installed('molokai')
   colorscheme molokai
 endif
@@ -598,11 +614,11 @@ set autoindent
 set smartindent
 " 自動インデントした際のズレ幅
 set shiftwidth=2
-" 文字コード設定（UTF-8）
+" 文字コード設定（utf-8）
 set encoding=utf-8
 " 文字コードの自動判定
 set fileencodings=utf-8,iso-2022-jp,sjis,euc-jp
-" 改行コード設定（UNIX）
+" 改行コード設定（unix）
 set ff=unix
 " 改行コードの自動判別
 set fileformats=unix,dos,mac
@@ -612,7 +628,7 @@ set number
 if has('mouse')
   set mouse=a
 endif
-" TERM環境変数の値
+" term環境変数の値
 set ttymouse=xterm2
 " インクリメンタルサーチを有効化
 set incsearch
@@ -647,16 +663,16 @@ set nobackup
 " 書込前にバックアップを作成し，書込成功後削除
 set writebackup
 " 挿入モード中のみ編集中の行をハイライト表示
-au InsertEnter,InsertLeave * set cursorline!
+au insertenter,insertleave * set cursorline!
 " 挿入モード中のみ編集中の行番号をハイライト標示
-hi CursorLineNr term=bold   cterm=NONE ctermfg=228 ctermbg=NONE
+hi cursorlinenr term=bold   cterm=none ctermfg=228 ctermbg=none
 " ファイル形式の自動検出
 filetype plugin indent on
 " シンタックスカラーを有効化
 syntax on
 " カラー設定を256階調で設定
-set t_Co=256
-" ESC打鍵時に，挿入モード離脱までの時間
+set t_co=256
+" esc打鍵時に，挿入モード離脱までの時間
 set timeoutlen=250
 " ビープ音を鳴らさない
 set visualbell
