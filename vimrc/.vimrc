@@ -485,8 +485,6 @@ nnoremap q :q<Cr>
 nnoremap qq :qa<Cr>
 " 保存
 nnoremap w :w<Cr>
-" sudo権限として保存
-nnoremap fw w !sudo tee > /dev/null %<CR> :e!<CR>
 " 画面を横分割
 nnoremap <silent> <BAR> :vsplit<Cr>
 " 画面を立て分割
