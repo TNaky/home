@@ -25,8 +25,8 @@
 " プラグイン設定
 " NeoBundle が無ければインストール
 if !isdirectory(expand('$HOME/.vim/bundle'))
-  !mkdir -p $HOME/.vim/bundle
-  !git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
+  call system('mkdir -p $HOME/.vim/bundle')
+  call system('git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim')
   source $HOME/.vimrc
   NeoBundleInstall
   q
