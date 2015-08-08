@@ -138,6 +138,14 @@ if has('vim_starting')
     " Processing のシンタックスハイライト＆リファレンス参照用
     NeoBundle 'sophacles/vim-processing'
   endif
+  " VimのバックグラウンドでJazz再生する
+  " :JazzradioUpdateChannels でチャンネルリストの更新
+  " :Unite jazzradio でチャンネルリストを表示
+  if executable('mplayer')
+    NeoBundleLazy 'supermomonga/jazzradio.vim', {
+      \ 'depends' : [ 'Shougo/unite.vim' ]
+    \ }
+  endif
 
 
   " 以下カラースキーム
@@ -366,6 +374,25 @@ endif
 " tcomment.vimの設定(編集すると，コメントアウトしてくれるファイルタイプが増やせます)
 if !exists('g:tcomment_types')
   let g:tcomment_types = {}
+endif
+
+" jazzradio.vimの設定
+if neobundle#tap('jazzradio.vim')
+  call neobundle#config({
+    \ 'autoload' : {
+      \ 'unite_sources' : [
+        \ 'jazzradio'
+      \ ],
+      \ 'commands' : [
+        \ 'JazzradioUpdateChannels',
+        \ 'JazzradioStop', {
+          \ 'name' : 'JazzradioPlay',
+          \ 'complete' : 'customlist,jazzradio#channel_id_complete'
+        \ }
+      \ ],
+      \ 'function_prefix' : 'jazzradio'
+    \ }
+  \ })
 endif
 
 " vim-gitgutterの設定
