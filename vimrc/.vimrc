@@ -80,7 +80,9 @@ if has('vim_starting')
     NeoBundle 'Shougo/neocomplcache.vim'
   endif
   " Python用入力補完
-  NeoBundle 'davidhalter/jedi-vim'
+  NeoBundleLazy 'davidhalter/jedi-vim', {
+    \ 'autoload' : {'filetype' : [ 'py' ]}
+  \ }
   " スニペット補完プラグイン
   NeoBundle 'Shougo/neosnippet'
   " 各種スニペット
@@ -129,7 +131,9 @@ if has('vim_starting')
   " コメントアウトをしてくれるよ
   NeoBundle 'tomtom/tcomment_vim'
   " LaTeXの文書作成支援プラグイン
-  NeoBundle 'lervag/vim-latex'
+  NeoBundleLazy 'lervag/vim-latex', {
+    \ 'autoload' : {'filetype' : [ 'tex' ]}
+  \ }
   " ブラウザ開くよ(GUIが無いと駄目だよ)
   NeoBundle 'open-browser.vim'
   " markdown記法をゴニョゴニョしてくれる
@@ -139,13 +143,15 @@ if has('vim_starting')
     NeoBundle 'sophacles/vim-processing'
   endif
   " VimのバックグラウンドでJazz再生する
-  " :JazzradioUpdateChannels でチャンネルリストの更新
-  " :Unite jazzradio でチャンネルリストを表示
   if executable('mplayer')
     NeoBundleLazy 'supermomonga/jazzradio.vim', {
       \ 'depends' : [ 'Shougo/unite.vim' ]
     \ }
   endif
+  " HTMLのテンプレートを挿入してくれるやつ
+  NeoBundleLazy 'mattn/emmet-vim', {
+    \ 'autoload' : {'filetypes' : [ 'html' ]}
+  \ }
 
 
   " 以下カラースキーム
