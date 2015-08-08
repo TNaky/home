@@ -269,7 +269,7 @@ function! MemoNew()
 endfunction
 
 if executable('ctags')
-  " LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
+  " ctagsの設定ファイルがあるかどうか確認
   if !filereadable(expand('$HOME/.ctags'))
     " 設定ファイルが無い場合生成して，設定内容を書込
     :let outputfile = '$HOME/.ctags'
