@@ -308,10 +308,12 @@ let g:quickrun_config = {
     \ }
   \ }
 
-let g:quickrun_config.processing = {
-  \ 'command': 'processing-java',
-  \ 'exec': '%c --sketch=%s:p:h/ --output=/tmp/processing --run --force'
-\ }
+if executable('processing-java')
+  let g:quickrun_config.processing = {
+    \ 'command': 'processing-java',
+    \ 'exec': '%c --sketch=%s:p:h/ --output=/tmp/processing --run --force'
+  \ }
+endif
 
 " Markdown記法関連の設定
 au BufRead,BufNewFile *.md set filetype=markdown
