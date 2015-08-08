@@ -25,10 +25,14 @@
 " プラグイン設定
 " NeoBundle が無ければインストール
 if !isdirectory(expand('$HOME/.vim/bundle'))
-  call system('mkdir -p $HOME/.vim/bundle')
-  call system('git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim')
-  source $HOME/.vimrc
-  NeoBundleInstall
+  if executable('git')
+    call system('mkdir -p $HOME/.vim/bundle')
+    call system('git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim')
+    source $HOME/.vimrc
+    NeoBundleInstall
+  else
+    !echo '\n\e[31mYou need to install the git for using plugins'
+  endif
   q
 endif
 
@@ -130,8 +134,11 @@ if has('vim_starting')
   NeoBundle 'open-browser.vim'
   " markdown記法をゴニョゴニョしてくれる
   NeoBundle 'plasticboy/vim-markdown'
-  " Processing のシンタックスハイライト＆リファレンス参照用
-  NeoBundle 'sophacles/vim-processing'
+  if executable('processing-java')
+    " Processing のシンタックスハイライト＆リファレンス参照用
+    NeoBundle 'sophacles/vim-processing'
+  endif
+
 
   " 以下カラースキーム
   " olarized カラースキーム
