@@ -31,7 +31,7 @@ if !isdirectory(expand('$HOME/.vim/bundle'))
     source $HOME/.vimrc
     NeoBundleInstall
   else
-    !echo '\n\e[31mYou need to install the git for using plugins'
+    !echo '\n\e[1;31m* You need to install the git for using plugins *\e[0m'
   endif
   q
 endif
