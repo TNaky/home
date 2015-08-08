@@ -148,11 +148,10 @@ if has('vim_starting')
       \ 'depends' : [ 'Shougo/unite.vim' ]
     \ }
   endif
-  " HTMLのテンプレートを挿入してくれるやつ
+  " HTMLのテンプレートを挿入してくれるやつ（キーバインド：<C-e><C-e>）
   NeoBundleLazy 'mattn/emmet-vim', {
     \ 'autoload' : {'filetypes' : [ 'html' ]}
   \ }
-
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -322,6 +321,7 @@ let g:quickrun_config = {
     \ }
   \ }
 
+" プロセッシングを実行する設定
 if executable('processing-java')
   let g:quickrun_config.processing = {
     \ 'command': 'processing-java',
@@ -400,6 +400,8 @@ if neobundle#tap('jazzradio.vim')
     \ }
   \ })
 endif
+
+let g:user_emmet_expandabbr_key = '<c-e><c-e>'
 
 " vim-gitgutterの設定
 let g:gitgutter_sign_added = '✚'
