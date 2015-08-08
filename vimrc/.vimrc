@@ -135,27 +135,27 @@ if has('vim_starting')
 
   " 以下カラースキーム
   " olarized カラースキーム
-  NeoBundle 'altercation/vim-colors-solarized'
+  NeoBundleLazy 'altercation/vim-colors-solarized'
   " mustang カラースキーム
-  NeoBundle 'croaker/mustang-vim'
+  NeoBundleLazy 'croaker/mustang-vim'
   " wombat カラースキーム
-  NeoBundle 'jeffreyiacono/vim-colors-wombat'
+  NeoBundleLazy 'jeffreyiacono/vim-colors-wombat'
   " jellybeans カラースキーム
-  NeoBundle 'nanotech/jellybeans.vim'
+  NeoBundleLazy 'nanotech/jellybeans.vim'
   " lucius カラースキーム
-  NeoBundle 'vim-scripts/Lucius'
+  NeoBundleLazy 'vim-scripts/Lucius'
   " zenburn カラースキーム
-  NeoBundle 'vim-scripts/Zenburn'
+  NeoBundleLazy 'vim-scripts/Zenburn'
   " mrkn256 カラースキーム
-  NeoBundle 'mrkn/mrkn256.vim'
+  NeoBundleLazy 'mrkn/mrkn256.vim'
   " railscasts カラースキーム
-  NeoBundle 'jpo/vim-railscasts-theme'
+  NeoBundleLazy 'jpo/vim-railscasts-theme'
   " pyte カラースキーム
-  NeoBundle 'therubymug/vim-pyte'
+  NeoBundleLazy 'therubymug/vim-pyte'
   " molokai カラースキーム
   NeoBundle 'tomasr/molokai'
   " Hybiridカラースキーム
-  NeoBundle 'w0ng/vim-hybrid'
+  NeoBundleLazy 'w0ng/vim-hybrid'
 
   " NeoBundleを終了
   call neobundle#end()
