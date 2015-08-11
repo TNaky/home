@@ -30,6 +30,7 @@ bindkey -a "^E" vi-end-of-line
 bindkey "^A" vi-beginning-of-line
 bindkey "^E" vi-end-of-line
 export EDITOR=vi
+export KEYTIMEOUT=1
 
 # export homeBin
 export PATH=$PATH:$HOME/.bin/sh/
