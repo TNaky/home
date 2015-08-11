@@ -10,6 +10,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# ビープ音を鳴らさない
+setopt no_beep
 # Vi mode
 bindkey -v
 function zle-line-init zle-keymap-select {
