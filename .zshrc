@@ -24,11 +24,12 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
+bindkey "^R" history-incremental-pattern-search-backward
 bindkey -a "^A" vi-beginning-of-line
 bindkey -a "^E" vi-end-of-line
 bindkey "^A" vi-beginning-of-line
 bindkey "^E" vi-end-of-line
-export EDITOR=vim
+export EDITOR=vi
 
 # export homeBin
 export PATH=$PATH:$HOME/.bin/sh/
