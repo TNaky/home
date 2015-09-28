@@ -645,6 +645,8 @@ noremap <silent> <C-/> :TComment<Cr>
 if neobundle#is_installed('molokai')
   colorscheme molokai
 endif
+" 入力補完の大文字小文字を区別しない
+set infercase
 " バックスペースキーを有効化
 set backspace=indent,eol,start
 " タブの文字数
@@ -673,12 +675,20 @@ if has('mouse')
 endif
 " TERM環境変数の値
 set ttymouse=xterm2
+" 検索時に大文字小文字を区別しない
+set ignorecase
+" 検索対象文字に大文字がある場合，大文字小文字を区別
+set smartcase
 " インクリメンタルサーチを有効化
 set incsearch
 " 検索結果をハイライト表示
 set hlsearch
 " 対応する括弧のハイライト表示
 set showmatch
+" 対応する括弧のハイライト表示を３秒間だけにする
+set matchtime=3
+" 対応する括弧に'<'と'>'のペアを追加
+set matchpairs& matchpairs+=<:>
 " バッファの変更を有効化
 set modifiable
 " ファイルの書き込みを有効化
@@ -739,6 +749,11 @@ if has('syntax')
   augroup END
   call ZnkakSpace()
 endif
+
+" 検索時にスラッシュを状況に応じエスケープ
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+" 検索時にクエスチョンを状況に応じエスケープ
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
 " バイナリ編集（xxd）モード（vim -b で起動，もしくは *.bin ファイルを開くと起動）
 augroup Binary
