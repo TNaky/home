@@ -25,14 +25,10 @@
 " プラグイン設定
 " NeoBundle が無ければインストール
 if !isdirectory(expand('$HOME/.vim/bundle'))
-  if executable('git')
-    call system('mkdir -p $HOME/.vim/bundle')
-    call system('git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim')
-    source $HOME/.vimrc
-    NeoBundleInstall
-  else
-    !echo '\n\e[1;31m* Need to install the "git" for using plugins \! *\e[0m'
-  endif
+  call system('mkdir -p $HOME/.vim/bundle')
+  call system('git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim')
+  source $HOME/.vimrc
+  NeoBundleInstall
   q
 endif
 
@@ -59,10 +55,11 @@ if has('vim_starting')
   " Vimproc（非同期処理を実現するプラグイン：重たい処理実施時にVimがフリーズしない様にします）
   NeoBundle 'Shougo/vimproc.vim', {
     \ 'build' : {
-      \ 'windows' : 'make -f make_mingw32.mak',
+      \ 'windows' : 'tools\\update-dll-mingw',
       \ 'cygwin' : 'make -f make_cygwin.mak',
       \ 'mac' : 'make -f make_mac.mak',
-      \ 'unix' : 'make -f make_unix.mak',
+      \ 'linux' : 'make',
+      \ 'unix' : 'gmake',
     \ },
   \ }
   " 入力補完
@@ -80,9 +77,7 @@ if has('vim_starting')
     NeoBundle 'Shougo/neocomplcache.vim'
   endif
   " Python用入力補完
-  NeoBundleLazy 'davidhalter/jedi-vim', {
-    \ 'autoload' : {'filetype' : [ 'py' ]}
-  \ }
+  NeoBundle 'davidhalter/jedi-vim'
   " スニペット補完プラグイン
   NeoBundle 'Shougo/neosnippet'
   " 各種スニペット
@@ -131,51 +126,37 @@ if has('vim_starting')
   " コメントアウトをしてくれるよ
   NeoBundle 'tomtom/tcomment_vim'
   " LaTeXの文書作成支援プラグイン
-  NeoBundleLazy 'lervag/vim-latex', {
-    \ 'autoload' : {'filetype' : [ 'tex' ]}
-  \ }
+  NeoBundle 'lervag/vim-latex'
   " ブラウザ開くよ(GUIが無いと駄目だよ)
   NeoBundle 'open-browser.vim'
   " markdown記法をゴニョゴニョしてくれる
   NeoBundle 'plasticboy/vim-markdown'
-  if executable('processing-java')
-    " Processing のシンタックスハイライト＆リファレンス参照用
-    NeoBundle 'sophacles/vim-processing'
-  endif
-  " VimのバックグラウンドでJazz再生する
-  if executable('mplayer')
-    NeoBundleLazy 'supermomonga/jazzradio.vim', {
-      \ 'depends' : [ 'Shougo/unite.vim' ]
-    \ }
-  endif
-  " HTMLのテンプレートを挿入してくれるやつ（キーバインド：<C-e><C-e>）
-  NeoBundleLazy 'mattn/emmet-vim', {
-    \ 'autoload' : {'filetypes' : [ 'html' ]}
-  \ }
+  " Processing のシンタックスハイライト＆リファレンス参照用
+  NeoBundle 'sophacles/vim-processing'
 
   " 以下カラースキーム
   " olarized カラースキーム
-  NeoBundleLazy 'altercation/vim-colors-solarized'
+  NeoBundle 'altercation/vim-colors-solarized'
   " mustang カラースキーム
-  NeoBundleLazy 'croaker/mustang-vim'
+  NeoBundle 'croaker/mustang-vim'
   " wombat カラースキーム
-  NeoBundleLazy 'jeffreyiacono/vim-colors-wombat'
+  NeoBundle 'jeffreyiacono/vim-colors-wombat'
   " jellybeans カラースキーム
-  NeoBundleLazy 'nanotech/jellybeans.vim'
+  NeoBundle 'nanotech/jellybeans.vim'
   " lucius カラースキーム
-  NeoBundleLazy 'vim-scripts/Lucius'
+  NeoBundle 'vim-scripts/Lucius'
   " zenburn カラースキーム
-  NeoBundleLazy 'vim-scripts/Zenburn'
+  NeoBundle 'vim-scripts/Zenburn'
   " mrkn256 カラースキーム
-  NeoBundleLazy 'mrkn/mrkn256.vim'
+  NeoBundle 'mrkn/mrkn256.vim'
   " railscasts カラースキーム
-  NeoBundleLazy 'jpo/vim-railscasts-theme'
+  NeoBundle 'jpo/vim-railscasts-theme'
   " pyte カラースキーム
-  NeoBundleLazy 'therubymug/vim-pyte'
+  NeoBundle 'therubymug/vim-pyte'
   " molokai カラースキーム
   NeoBundle 'tomasr/molokai'
   " Hybiridカラースキーム
-  NeoBundleLazy 'w0ng/vim-hybrid'
+  NeoBundle 'w0ng/vim-hybrid'
 
   " NeoBundleを終了
   call neobundle#end()
@@ -289,7 +270,7 @@ function! MemoNew()
 endfunction
 
 if executable('ctags')
-  " ctagsの設定ファイルがあるかどうか確認
+  " LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
   if !filereadable(expand('$HOME/.ctags'))
     " 設定ファイルが無い場合生成して，設定内容を書込
     :let outputfile = '$HOME/.ctags'
@@ -321,13 +302,10 @@ let g:quickrun_config = {
     \ }
   \ }
 
-" プロセッシングを実行する設定
-if executable('processing-java')
-  let g:quickrun_config.processing = {
-    \ 'command': 'processing-java',
-    \ 'exec': '%c --sketch=%s:p:h/ --output=/tmp/processing --run --force'
-  \ }
-endif
+let g:quickrun_config.processing = {
+  \ 'command': 'processing-java',
+  \ 'exec': '%c --sketch=%s:p:h/ --output=/tmp/processing --run --force'
+\ }
 
 " Markdown記法関連の設定
 au BufRead,BufNewFile *.md set filetype=markdown
@@ -381,27 +359,6 @@ endif
 if !exists('g:tcomment_types')
   let g:tcomment_types = {}
 endif
-
-" jazzradio.vimの設定
-if neobundle#tap('jazzradio.vim')
-  call neobundle#config({
-    \ 'autoload' : {
-      \ 'unite_sources' : [
-        \ 'jazzradio'
-      \ ],
-      \ 'commands' : [
-        \ 'JazzradioUpdateChannels',
-        \ 'JazzradioStop', {
-          \ 'name' : 'JazzradioPlay',
-          \ 'complete' : 'customlist,jazzradio#channel_id_complete'
-        \ }
-      \ ],
-      \ 'function_prefix' : 'jazzradio'
-    \ }
-  \ })
-endif
-
-let g:user_emmet_expandabbr_key = '<c-e><c-e>'
 
 " vim-gitgutterの設定
 let g:gitgutter_sign_added = '✚'
@@ -538,6 +495,8 @@ vnoremap <C-x> <C-x>gv
 noremap <C-a> ^
 " 行の末尾へ移動
 noremap <C-e> $
+" vv で行末まで選択
+vnoremap v ^$h
 " 終了
 nnoremap q :q<Cr>
 " 終了
@@ -645,8 +604,6 @@ noremap <silent> <C-/> :TComment<Cr>
 if neobundle#is_installed('molokai')
   colorscheme molokai
 endif
-" 入力補完の大文字小文字を区別しない
-set infercase
 " バックスペースキーを有効化
 set backspace=indent,eol,start
 " タブの文字数
@@ -675,20 +632,12 @@ if has('mouse')
 endif
 " TERM環境変数の値
 set ttymouse=xterm2
-" 検索時に大文字小文字を区別しない
-set ignorecase
-" 検索対象文字に大文字がある場合，大文字小文字を区別
-set smartcase
 " インクリメンタルサーチを有効化
 set incsearch
 " 検索結果をハイライト表示
 set hlsearch
 " 対応する括弧のハイライト表示
 set showmatch
-" 対応する括弧のハイライト表示を３秒間だけにする
-set matchtime=3
-" 対応する括弧に'<'と'>'のペアを追加
-set matchpairs& matchpairs+=<:>
 " バッファの変更を有効化
 set modifiable
 " ファイルの書き込みを有効化
@@ -749,11 +698,6 @@ if has('syntax')
   augroup END
   call ZnkakSpace()
 endif
-
-" 検索時にスラッシュを状況に応じエスケープ
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-" 検索時にクエスチョンを状況に応じエスケープ
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
 " バイナリ編集（xxd）モード（vim -b で起動，もしくは *.bin ファイルを開くと起動）
 augroup Binary
