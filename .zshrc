@@ -44,6 +44,12 @@ bindkey -M vicmd v edit-command-line
 # export homeBin
 export PATH=$PATH:$HOME/.bin/sh/
 
+# export Android development
+export ANDROID_SDK=$HOME/Library/android-sdk-macosx
+export ANDROID_NDK=$HOME/Library/android-ndk-r10e
+export PATH=$PATH:ANDROID_SDK/platform-tools
+export PATH=$PATH:ANDROID_SDK/tools
+
 # Customize to your needs...
 export WWW_HOME="google.co.jp"
 
