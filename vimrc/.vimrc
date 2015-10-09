@@ -125,15 +125,12 @@ if has('vim_starting')
   NeoBundle 'ujihisa/vimshell-ssh'
   " コメントアウトをしてくれるよ
   NeoBundle 'tomtom/tcomment_vim'
-  " LaTeXの文書作成支援プラグイン
-  NeoBundle 'lervag/vim-latex'
   " ブラウザ開くよ(GUIが無いと駄目だよ)
   NeoBundle 'open-browser.vim'
   " markdown記法をゴニョゴニョしてくれる
   NeoBundle 'plasticboy/vim-markdown'
   " Processing のシンタックスハイライト＆リファレンス参照用
   NeoBundle 'sophacles/vim-processing'
-
   " 以下カラースキーム
   " olarized カラースキーム
   NeoBundle 'altercation/vim-colors-solarized'
@@ -342,8 +339,6 @@ if executable('latexmk')
     \ 'exec': ['%c %o %s']
   \ }
 endif
-" Vim-latexの設定
-let g:latex_fold_enabled = 0
 
 " Graphvizをコンパイルする
 if executable('dot')
