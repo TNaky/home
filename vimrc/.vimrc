@@ -676,6 +676,8 @@ set visualbell
 set vb t_vb=
 " コメントの色変更
 hi Comment ctermfg=Gray
+" Macの場合にクリップボードを共有
+set clipboard+=unnamed
 
 " 全角スペースを表示
 function! ZnkakSpace()
