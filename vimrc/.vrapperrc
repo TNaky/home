@@ -1,0 +1,21 @@
+" コマンド入力をセミコロンでも可
+noremap ; :
+" 文字列検索後のハイライトを解除
+noremap <Esc><Esc> :<C-u>nohlsearch<Cr><Esc>
+" 行の先頭へ移動
+noremap <C-a> ^
+" 行の末尾へ移動
+noremap <C-e> $
+" 保存
+nnoremap w :w<Cr>
+" 数値のインクリメント
+vnoremap <C-i> <C-a>gv
+" 数値のデクリメント
+vnoremap <C-x> <C-x>gv
+" 置換
+noremap s :%s/
+
+" インクリメンタルサーチを有効化
+set incsearch
+" 検索結果をハイライト表示
+set hlsearch
