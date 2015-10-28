@@ -76,6 +76,8 @@ sudo aptitude install \
   ruby
 ```
 
+今日はここまで．．．
+
 ## PowerlineFont install
 当Vimrcではステータス標示にPowerlineFontと呼ばれる，特別なフォントを利用します．
 
