@@ -3,7 +3,6 @@
 Vimの設定ファイルであるvimrcについて
 
 # Vim環境
-MacOS環境
 
 ver 7.4 +lua環境で作成
 
