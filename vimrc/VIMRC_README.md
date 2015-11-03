@@ -89,7 +89,7 @@ Vimのソースファイルをクローン＆コンパイル
 sudo aptitude install mercurial
 hg clone hg clone https://bitbucket.org/vim-mirror/vim
 cd vim
-configure \
+./configure \
   --with-features=huge \
   --disable-darwin \
   --disable-selinux \
