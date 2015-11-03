@@ -45,6 +45,12 @@ sudo aptitude update
 sudo aptitude safe-upgrade
 ```
 
+古いVimは消す（下記以外のVimがインストールされてて，必要もないのであれば消しちゃっても問題なし？）
+
+```zsh
+sudo aptitude remove vim-common vim-tiny
+```
+
 Vimのコンパイルに必要なパッケージを導入
 
 ```zsh
