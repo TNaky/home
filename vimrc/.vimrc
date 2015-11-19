@@ -577,9 +577,9 @@ nnoremap <silent>ml :MemoList<Cr>
 " メモをgrep検索
 nnoremap <silent>gm :MemoGrep<Cr>
 " Quickrunを実行（要するにIEDとかにあるRunです）
-nnoremap rn :QuickRun 
+nnoremap <F5> :QuickRun 
 " 選択範囲のみに対してQuickRunを実行
-vnoremap <silent><buffer> rn :QuickRun -mode v -type tmptex<Cr>
+vnoremap <silent><buffer> <F5> :QuickRun -mode v -type tmptex<Cr>
 " Quickrunの終了(おなじみCtrl+cです）
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " git status 現在のファイルの状態を取得
