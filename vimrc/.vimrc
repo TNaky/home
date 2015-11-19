@@ -363,15 +363,7 @@ if executable('latexmk')
     \ 'hook/eval/cd' : "%s:r",
     \ 'hook/eval/template' : '\documentclass{jsarticle}'
       \ .'\usepackage[dvipdfmx]{graphicx, hyperref}'
-      \ .'\usepackage{float}'
-      \ .'\usepackage{amsmath,amssymb,amsthm,ascmac,mathrsfs}'
-      \ .'\allowdisplaybreaks[1]'
-      \ .'\theoremstyle{definition}'
-      \ .'\newtheorem{theorem}{定理}'
-      \ .'\newtheorem*{theorem*}{定理}'
-      \ .'\newtheorem{definition}[theorem]{定義}'
-      \ .'\newtheorem*{definition*}{定義}'
-      \ .'\renewcommand\vector[1]{\mbox{\boldmath{\$#1\$}}}'
+      \ .'\usepackage{amsmath,amssymb,amsthm}'
       \ .'\begin{document}'
       \ .'%s'
       \ .'\end{document}',
