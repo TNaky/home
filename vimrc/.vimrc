@@ -476,8 +476,6 @@ function! MyCharCode()
 endfunction
 
 " キーマップ設定
-" コマンド入力をセミコロンでも可
-noremap ; :
 " 文字列検索後のハイライトを解除
 noremap <silent> <Esc><Esc> :<C-u>nohlsearch<Cr><Esc>
 " 数値のインクリメント
