@@ -505,9 +505,7 @@ nnoremap < <C-w><
 " 置換
 noremap <M-s> :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-nnoremap <silent> ft :VimFilerTab<Cr>
-" Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
-nnoremap <silent> fo :VimFiler -split -winwidth=30 -simple -toggle<Cr>
+nnoremap <silent> <F2> :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " 入力補完のキーバインド
 " tabキーで次の検索候補を選択
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -526,10 +524,6 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 " タグジャンプに必要なtagファイルを生成
 nnoremap <silent><Leader>tg :Ctags
-" タグジャンプしますよ
-noremap tj <C-]>
-" タグジャンプ戻りますよ
-noremap tb <C-t>
 " メモを新規作成
 nnoremap <silent>mn :call MemoNew()<Cr>
 " メモをリスト表示
