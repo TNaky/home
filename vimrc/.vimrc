@@ -352,10 +352,6 @@ if executable('latexmk')
   \ }
 
   let g:quickrun_config.tmptex = {
-    \ 'exec' : [
-      \ 'mv %s %a/tmptex.latex',
-      \ 'latexmk -pdfdvi -pv -output-directory=%a %a/tmptex.latex',
-    \ ],
     \ 'args' : expand("%:p:h:gs?\\\\?/?"),
     \ 'outputter' : 'error',
     \ 'outputter/error/error' : 'quickfix',
@@ -374,7 +370,11 @@ if executable('latexmk')
       \ '%a/tmptex.log',
       \ '%a/tmptex.aux',
       \ '%a/tmptex.dvi'
-    \ ]
+    \ ],
+    \'exec' : [
+      \ 'mv -fv `echo %s | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.latex',
+      \ 'latexmk -pdfdvi -pv -output-directory=`echo %a | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.latex',
+    \ ],
   \ }
 endif
 
