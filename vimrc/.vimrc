@@ -336,7 +336,7 @@ if executable('latexmk')
     \ 'outputter' : 'error',
     \ 'outputter/error/success' : 'null',
     \ 'outputter/error/error' : 'quickfix',
-    \ 'srcfile' ; expand("%"),
+    \ 'srcfile' : expand("%"),
     \ 'cmdopt': '-pdfdvi',
     \ 'hook/sweep/files' : [
       \ '%S:p:r.aux',
@@ -346,9 +346,9 @@ if executable('latexmk')
       \ '%S:p:r.fdb_latexmk',
       \ '%S:p:r.fls',
       \ '%S:p:r.log',
-      \ '%S:p:r.out'
-    \ ]
-    \ 'exec': ['%c %o %a %s'],
+      \ '%S:p:r.out',
+    \ ],
+    \ 'exec': ['%c %o %a %s']
   \ }
 
   let g:quickrun_config.tmptex = {
@@ -382,7 +382,7 @@ if executable('latexmk')
       \ '%a/tmptex.log',
       \ '%a/tmptex.aux',
       \ '%a/tmptex.dvi'
-    \ ],
+    \ ]
   \ }
 endif
 
