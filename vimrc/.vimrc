@@ -364,7 +364,7 @@ if executable('latexmk')
       \ .'%s'
       \ .'\end{document}',
     \ 'hook/sweep/files' : [
-      \ '%a/tmptex.tex',
+      \ '%a/tmptex.latex',
       \ '%a/tmptex.out',
       \ '%a/tmptex.fdb_latexmk',
       \ '%a/tmptex.log',
@@ -372,8 +372,8 @@ if executable('latexmk')
       \ '%a/tmptex.dvi'
     \ ],
     \'exec' : [
-      \ 'mv -fv `echo %s | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.tex',
-      \ 'latexmk -pdfdvi -pv -output-directory=`echo %a | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.tex',
+      \ 'mv -fv `echo %s | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.latex',
+      \ 'latexmk -pdfdvi -pv -output-directory=`echo %a | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.latex',
     \ ],
   \ }
 endif
@@ -541,7 +541,7 @@ nnoremap > <C-w>>
 " 画面幅を減らします
 nnoremap < <C-w><
 " 置換
-noremap <M-s> :%s/
+noremap <F3> :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
 nnoremap <silent> <F2> :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " 入力補完のキーバインド
@@ -580,8 +580,8 @@ nnoremap st :Gstatus<Cr>
 nnoremap ad :Gwrite<Cr>
 " git commit 変更を記録
 nnoremap cm :Gcommit<Cr>
-" git reset --hard 変更をなかったことに
-nnoremap rh :Gread<Cr>
+" git checkout 変更をなかったことに
+nnoremap co :Gread<Cr>
 " git blame ファイルの各行の変更がどのコミットか調べる(バッグった時に，誰の変更可わかるよね！)
 nnoremap bm :Gblame<Cr>
 " git diff HEADとの変更をdiffってくれる
