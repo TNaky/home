@@ -502,10 +502,6 @@ nnoremap = <C-w>=
 nnoremap > <C-w>>
 " 画面幅を減らします
 nnoremap < <C-w><
-" 画面の高さを上げます
-nnoremap ^ <C-w>+
-" 画面の高さを下げます(アンダーバーだぞ! ハイフンじゃないぞ!!）
-nnoremap _ <C-w>-
 " 新規タブを作成
 nnoremap <C-t> :tabnew<Cr>
 " 次のタブへ移動
