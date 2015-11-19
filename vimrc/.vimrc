@@ -334,9 +334,55 @@ if executable('latexmk')
   let g:quickrun_config['tex'] = {
     \ 'command' : 'latexmk',
     \ 'outputter' : 'error',
+    \ 'outputter/error/success' : 'null',
     \ 'outputter/error/error' : 'quickfix',
+    \ 'srcfile' ; expand("%"),
     \ 'cmdopt': '-pdfdvi',
-    \ 'exec': ['%c %o %s']
+    \ 'hook/sweep/files' : [
+      \ '%S:p:r.aux',
+      \ '%S:p:r.bbl',
+      \ '%S:p:r.blg',
+      \ '%S:p:r.dvi',
+      \ '%S:p:r.fdb_latexmk',
+      \ '%S:p:r.fls',
+      \ '%S:p:r.log',
+      \ '%S:p:r.out'
+    \ ]
+    \ 'exec': ['%c %o %a %s'],
+  \ }
+
+  let g:quickrun_config.tmptex = {
+    \ 'exec' : [
+      \ 'mv %s %a/tmptex.latex',
+      \ 'latexmk -pdfdvi -pv -output-directory=%a %a/tmptex.latex',
+    \ ],
+    \ 'args' : expand("%:p:h:gs?\\\\?/?"),
+    \ 'outputter' : 'error',
+    \ 'outputter/error/error' : 'quickfix',
+    \ 'hook/eval/enable' : 1,
+    \ 'hook/eval/cd' : "%s:r",
+    \ 'hook/eval/template' : '\documentclass{jsarticle}'
+      \ .'\usepackage[dvipdfmx]{graphicx, hyperref}'
+      \ .'\usepackage{float}'
+      \ .'\usepackage{amsmath,amssymb,amsthm,ascmac,mathrsfs}'
+      \ .'\allowdisplaybreaks[1]'
+      \ .'\theoremstyle{definition}'
+      \ .'\newtheorem{theorem}{定理}'
+      \ .'\newtheorem*{theorem*}{定理}'
+      \ .'\newtheorem{definition}[theorem]{定義}'
+      \ .'\newtheorem*{definition*}{定義}'
+      \ .'\renewcommand\vector[1]{\mbox{\boldmath{\$#1\$}}}'
+      \ .'\begin{document}'
+      \ .'%s'
+      \ .'\end{document}',
+    \ 'hook/sweep/files' : [
+      \ '%a/tmptex.latex',
+      \ '%a/tmptex.out',
+      \ '%a/tmptex.fdb_latexmk',
+      \ '%a/tmptex.log',
+      \ '%a/tmptex.aux',
+      \ '%a/tmptex.dvi'
+    \ ],
   \ }
 endif
 
@@ -532,6 +578,8 @@ nnoremap <silent>ml :MemoList<Cr>
 nnoremap <silent>gm :MemoGrep<Cr>
 " Quickrunを実行（要するにIEDとかにあるRunです）
 nnoremap rn :QuickRun 
+" 選択範囲のみに対してQuickRunを実行
+vnoremap <silent><buffer> rn :QuickRun -mode v -type tmptex<Cr>
 " Quickrunの終了(おなじみCtrl+cです）
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " git status 現在のファイルの状態を取得
