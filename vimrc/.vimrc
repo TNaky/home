@@ -543,7 +543,7 @@ nnoremap cm :Gcommit<Cr>
 " git checkout 変更をなかったことに
 nnoremap co :Gread<Cr>
 " git blame ファイルの各行の変更がどのコミットか調べる(バッグった時に，誰の変更可わかるよね！)
-nnoremap lm :Gblame<Cr>
+nnoremap bm :Gblame<Cr>
 " git diff HEADとの変更をdiffってくれる
 nnoremap df :Gdiff<Cr>
 " git fetch フェッチしてくれる
@@ -554,7 +554,6 @@ nnoremap ps :Gpush<Cr>
 noremap <silent> vs :<C-u>VimShellPop<Cr>
 " 2回押しで選択行をコメントアウトしてくれます
 noremap <silent> <C-/> :TComment<Cr>
-
 
 " 環境設定
 " カラースキーマを設定(:Unite colorscheme -auto-preview => 良さそうなのを選ぶ)
