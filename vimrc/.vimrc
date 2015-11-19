@@ -364,7 +364,7 @@ if executable('latexmk')
       \ .'%s'
       \ .'\end{document}',
     \ 'hook/sweep/files' : [
-      \ '%a/tmptex.latex',
+      \ '%a/tmptex.tex',
       \ '%a/tmptex.out',
       \ '%a/tmptex.fdb_latexmk',
       \ '%a/tmptex.log',
@@ -372,8 +372,8 @@ if executable('latexmk')
       \ '%a/tmptex.dvi'
     \ ],
     \'exec' : [
-      \ 'mv -fv `echo %s | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.latex',
-      \ 'latexmk -pdfdvi -pv -output-directory=`echo %a | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.latex',
+      \ 'mv -fv `echo %s | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.tex',
+      \ 'latexmk -pdfdvi -pv -output-directory=`echo %a | sed -e s/\ /\\\\\\\\\ /g` `echo %a | sed -e s/\ /\\\\\\\\\ /g`/tmptex.tex',
     \ ],
   \ }
 endif
