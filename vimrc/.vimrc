@@ -580,8 +580,8 @@ nnoremap st :Gstatus<Cr>
 nnoremap ad :Gwrite<Cr>
 " git commit 変更を記録
 nnoremap cm :Gcommit<Cr>
-" git checkout 変更をなかったことに
-nnoremap co :Gread<Cr>
+" git reset --hard 変更をなかったことに
+nnoremap rh :Gread<Cr>
 " git blame ファイルの各行の変更がどのコミットか調べる(バッグった時に，誰の変更可わかるよね！)
 nnoremap bm :Gblame<Cr>
 " git diff HEADとの変更をdiffってくれる
