@@ -504,10 +504,6 @@ nnoremap > <C-w>>
 nnoremap < <C-w><
 " 新規タブを作成
 nnoremap <C-t> :tabnew<Cr>
-" 次のタブへ移動
-nnoremap <C-n> gt
-" 前のタブへ移動
-nnoremap <C-p> gT
 " 置換
 noremap s :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
