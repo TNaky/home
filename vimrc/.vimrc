@@ -103,7 +103,7 @@ if has('vim_starting')
   NeoBundle "osyo-manga/unite-quickfix"
   " QuickRun実行中に，ほんとに実行してるの？ってならないようにするアニメーション
   NeoBundle 'osyo-manga/shabadou.vim'
-  " Git
+  " Gitコマンドを操作する奴
   NeoBundle 'tpope/vim-fugitive'
   " Gitの差分を教えてくれるやつ
   NeoBundle 'airblade/vim-gitgutter'
@@ -514,6 +514,9 @@ function! MyCharCode()
 endfunction
 
 " キーマップ設定
+" F1をを日本語ヘルプに変更
+nnoremap <silent> <F1> :help@ja<Cr>
+inoremap <silent> <F1> <ESC>:help@ja<Cr>
 " 文字列検索後のハイライトを解除
 noremap <silent> <Esc><Esc> :<C-u>nohlsearch<Cr><Esc>
 " 数値のインクリメント
@@ -541,7 +544,7 @@ nnoremap > <C-w>>
 " 画面幅を減らします
 nnoremap < <C-w><
 " 置換
-noremap <F3> :%s/
+nnoremap s/ :%s/
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
 nnoremap <silent> <F2> :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " 入力補完のキーバインド
@@ -591,7 +594,7 @@ nnoremap fc :Gfetch<Cr>
 " 標準で設定されているサーバにpushします
 nnoremap ps :Gpush<Cr>
 " VimShellが起動するよ
-noremap <silent> vs :<C-u>VimShellPop<Cr>
+noremap <silent> vs :VimShellPop<Cr>
 " 2回押しで選択行をコメントアウトしてくれます
 noremap <silent> <C-/> :TComment<Cr>
 
