@@ -155,6 +155,7 @@ if has('vim_starting')
   call neobundle#end()
   " 未インストールのプラグインがないかチェックを実行
   NeoBundleCheck
+  NeoBundleClean
 endif
 
 " Filerの設定
@@ -600,6 +601,8 @@ if has('mouse')
 endif
 " TERM環境変数の値
 set ttymouse=xterm2
+" 検索時に大文字小文字の区別を行わない
+set ic
 " インクリメンタルサーチを有効化
 set incsearch
 " 検索結果をハイライト表示
