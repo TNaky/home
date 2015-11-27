@@ -131,6 +131,7 @@ if has('vim_starting')
   NeoBundle 'plasticboy/vim-markdown'
   " Processing のシンタックスハイライト＆リファレンス参照用
   NeoBundle 'sophacles/vim-processing'
+
   " 以下カラースキーム
   " olarized カラースキーム
   NeoBundle 'altercation/vim-colors-solarized'
@@ -545,6 +546,8 @@ nnoremap > <C-w>>
 nnoremap < <C-w><
 " 置換
 nnoremap s/ :%s/
+" 選択範囲の文字を上書きペースする
+vnoremap p "0p
 " Filerのキーバインド（<silent> をコマンド前につけると，実行されるコマンドがコンソールに非表示になる）
 nnoremap <silent> <F2> :VimFiler -split -winwidth=30 -simple -toggle<Cr>
 " 入力補完のキーバインド
