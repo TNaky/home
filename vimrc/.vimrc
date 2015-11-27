@@ -488,6 +488,8 @@ function! MyCharCode()
 endfunction
 
 " キーマップ設定
+" インサートモード時のみESCをjjでも許可
+inoremap <silent> jj <ESC>
 " F1をを日本語ヘルプに変更
 nnoremap <silent> <F1> :help@ja<Cr>
 inoremap <silent> <F1> <ESC>:help@ja<Cr>
