@@ -18,9 +18,6 @@
 "   $ brew tap sanemat/font
 "   $ brew install --powerline --vim-powerline ricty
 "   でダウンロードできるから，インストールしてみて
-" *3
-"   memolistで作成したメモのデータは，デフォルト設定だと'$HOME/.vim/memolists/'に格納されるよ
-"   変更したい場合は，g:memolist_pathに設定するディレクトリパスを変えてね
 
 " プラグイン設定
 " NeoBundle が無ければインストール
@@ -88,8 +85,6 @@ if has('vim_starting')
   NeoBundle 'ujihisa/unite-colorscheme'
   " タグジャンプに必要なtagファイルってのを自動生成してくれる良い奴
   NeoBundle 'soramugi/auto-ctags.vim'
-  " メモ帳的なやつ
-  NeoBundle 'glidenote/memolist.vim'
   " 絞り込み検索をしてくれる頼れるやつだよ
   NeoBundle 'fuenor/qfixgrep'
   " Vimの中でスクリプトを実行するよ
@@ -243,29 +238,6 @@ else
 endif
 " ctagsのオプションを設定してるよ
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes --edit_action'
-
-" メモ帳の設定
-" メモ帳を保存する場所
-let g:memolist_path = expand('~/.vim/memolists')
-" メモの形式
-let g:memolist_memo_suffix = "md"
-" メモ作成時にグループタグを設定
-let g:memolist_prompt_tags = 1
-" メモ作成時にカテゴリタグを設定
-let g:memolist_prompt_categories = 1
-" 検索にgfixgrepを使うよ
-let g:memolist_gfixgrep = 1
-" メモ表示にVimFiler使う
-let g:memolist_vimfiler = 1
-" メモを開くときにVimFilerに渡されるオプション
-" -split : 画面を分割してVimFilerを表示
-" -winwidth : VimFiler展開時のタブサイズ
-let g:memolist_vimfiler_option = "-split -winwidth=30 -simple"
-" メモ作成画面を別タブで表示する関数
-function! MemoNew()
-  :30vsplit
-  :MemoNew
-endfunction
 
 if executable('ctags')
   " LaTeXでtexファイルからpdfを生成するコマンドを叩く際の設定ファイルが有るかどうか確認
@@ -568,12 +540,6 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 " タグジャンプに必要なtagファイルを生成
 nnoremap <silent><Leader>tg :Ctags
-" メモを新規作成
-nnoremap <silent>mn :call MemoNew()<Cr>
-" メモをリスト表示
-nnoremap <silent>ml :MemoList<Cr>
-" メモをgrep検索
-nnoremap <silent>gm :MemoGrep<Cr>
 " Quickrunを実行（要するにIEDとかにあるRunです）
 nnoremap <F5> :QuickRun 
 " 選択範囲のみに対してQuickRunを実行
