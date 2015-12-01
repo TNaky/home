@@ -503,10 +503,6 @@ vnoremap <C-x> <C-x>gv
 vnoremap v ^$h
 " sudo権限で保存
 nnoremap wtee :w !sudo tee %
-" 画面を横分割
-nnoremap <silent> <BAR> :vsplit<Cr>
-" 画面を立て分割
-nnoremap <silent> - :split<Cr>
 " 画面幅を均等にします
 nnoremap = <C-w>=
 " 画面幅を増やします
@@ -544,23 +540,23 @@ vnoremap <silent><buffer> <F5> :QuickRun -mode v -type tmptex<Cr>
 " Quickrunの終了(おなじみCtrl+cです）
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " git status 現在のファイルの状態を取得
-nnoremap st :Gstatus<Cr>
+nnoremap <Space>st :Gstatus<Cr>
 " git add 変更をステージに追加
-nnoremap ad :Gwrite<Cr>
+nnoremap <Space>ad :Gwrite<Cr>
 " git commit 変更を記録
-nnoremap cm :Gcommit<Cr>
+nnoremap <Space>cm :Gcommit<Cr>
 " git checkout 変更をなかったことに
-nnoremap co :Gread<Cr>
+nnoremap <Space>co :Gread<Cr>
 " git blame ファイルの各行の変更がどのコミットか調べる(バッグった時に，誰の変更可わかるよね！)
-nnoremap bm :Gblame<Cr>
+nnoremap <Space>bm :Gblame<Cr>
 " git diff HEADとの変更をdiffってくれる
-nnoremap df :Gdiff<Cr>
+nnoremap <Space>df :Gdiff<Cr>
 " git fetch フェッチしてくれる
-nnoremap fc :Gfetch<Cr>
+nnoremap <Space>fc :Gfetch<Cr>
 " 標準で設定されているサーバにpushします
-nnoremap ps :Gpush<Cr>
+nnoremap <Space>ps :Gpush<Cr>
 " VimShellが起動するよ
-noremap <silent> vs :VimShellPop<Cr>
+noremap <silent> <Space>vs :VimShellPop<Cr>
 " 2回押しで選択行をコメントアウトしてくれます
 noremap <silent> <C-/> :TComment<Cr>
 
