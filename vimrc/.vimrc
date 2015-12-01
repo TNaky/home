@@ -269,7 +269,7 @@ let g:quickrun_config = {
     \ "outputter" : "multi:buffer:quickfix",
     \ "outputter/buffer/split" : ":botright 5sp",
     \ "runner" : "vimproc",
-    \ "runner/vimproc/updatetime" : 30,
+    \ "runner/vimproc/updatetime" : 60,
     \ }
   \ }
 
