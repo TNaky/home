@@ -501,12 +501,6 @@ vnoremap <C-a> <C-a>gv
 vnoremap <C-x> <C-x>gv
 " vv で行末まで選択
 vnoremap v ^$h
-" 終了
-nnoremap q :q<Cr>
-" 終了
-nnoremap qq :qa<Cr>
-" 保存
-nnoremap w :w<Cr>
 " sudo権限で保存
 nnoremap wtee :w !sudo tee %
 " 画面を横分割
