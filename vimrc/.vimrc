@@ -247,10 +247,8 @@ if executable('ctags')
     :let outputfile = '$HOME/.ctags'
     :execute ':redir! > ' . outputfile
       :silent! echon "--sort=yes" . "\n"
-      :silent! echon "--input-encoding=utf-8" . "\n"
-      :silent! echon "--input-encoding-c=sjis" . "\n"
-      :silent! echon "--input-encoding-vim=utf-8" . "\n"
-      :silent! echon "--input-encoding-go=utf-8" . "\n"
+      :silent! echon "--append=yes" . "\n"
+      :silent! echon "--recurse=yes" . "\n"
     :redir END
   endif
 endif
