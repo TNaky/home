@@ -702,10 +702,10 @@ augroup END
 " 必要なライブラリパスを設定します
 augroup c_path
   autocmd!
-  autocmd FileType c setlocal path=.,/usr/include,/usr/local/include
+  autocmd FileType c setlocal path+=.,/usr/include,/usr/local/include
 augroup END
 
 augroup cpp_path
   autocmd!
-  autocmd FileType cpp setlocal path=.,/usr/include,/usr/local/include
+  autocmd FileType cpp setlocal path+=.,/usr/include,/usr/local/include
 augroup END
