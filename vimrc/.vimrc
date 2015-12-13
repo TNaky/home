@@ -212,6 +212,13 @@ if neobundle#is_installed('neocomplete.vim')
   if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
   endif
+
+  " オムニ補完設定
+  " c用
+  let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+  " cpp用
+  let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+  " Python用
   let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 
 elseif neobundle#is_installed('neocomplcache')
@@ -690,4 +697,15 @@ augroup Binary
   au BufWritePre  * if &bin | %!xxd -r
   au BufWritePost * if &bin | silent %!xxd -g 1
   au BufWritePost * set nomod | endif
+augroup END
+
+" 必要なライブラリパスを設定します
+augroup c_path
+  autocmd!
+  autocmd FileType c setlocal path=.,/usr/include,/usr/local/include
+augroup END
+
+augroup cpp_path
+  autocmd!
+  autocmd FileType cpp setlocal path=.,/usr/include,/usr/local/include
 augroup END
