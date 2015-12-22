@@ -670,6 +670,8 @@ set vb t_vb=
 hi Comment ctermfg=Gray
 " Macの場合にクリップボードを共有
 set clipboard+=unnamed
+" 検索時の文字色を変更
+hi Search ctermfg=Blue
 
 " 全角スペースを表示
 function! ZnkakSpace()
