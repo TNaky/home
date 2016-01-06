@@ -1,1 +1,1 @@
-set-option -g status-right "#[fg=colour226] #(sh ./getPower.sh) #[fg=cyan][%Y-%m-%d(%a) %H:%M:%S]"
+set-option -g status-right "#[fg=colour226] #(sh ~/.tmux.osx/getPower.sh) #[fg=cyan][%Y-%m-%d(%a) %H:%M:%S]"
