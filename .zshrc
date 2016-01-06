@@ -15,8 +15,8 @@ setopt no_beep
 # Vi mode
 bindkey -v
 function zle-line-init zle-keymap-select {
-  VIM_NORMAL="%K{148}%F{black}⮀%k%f%K{148}%F{022} %B NORMAL %b%k%f%K{black}%F{148}⮀%k%f"
-  VIM_INSERT="%K{255}%F{black}⮀%k%f%K{255}%F{024} %B INSERT %b%k%f%K{black}%F{255}⮀%k%f"
+  VIM_NORMAL="%K{148}%F%k%f%K{148}%F{022} %B NORMAL %b%k%f%K{black}%F{148}⮀%k%f"
+  VIM_INSERT="%K{255}%F%k%f%K{255}%F{024} %B INSERT %b%k%f%K{black}%F{255}⮀%k%f"
   RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
   RPS2=$RPS1
   zle reset-prompt
@@ -52,4 +52,3 @@ export PATH=$PATH:ANDROID_SDK/tools
 
 # Customize to your needs...
 export WWW_HOME="google.co.jp"
-
