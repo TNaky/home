@@ -15,11 +15,11 @@ setopt no_beep
 # Vi mode
 bindkey -v
 function zle-line-init zle-keymap-select {
-  VIM_NORMAL="%K{148}%F%k%f%K{148}%F{022} %B NORMAL %b%k%f%K{black}%F{148}⮀%k%f"
-  VIM_INSERT="%K{255}%F%k%f%K{255}%F{024} %B INSERT %b%k%f%K{black}%F{255}⮀%k%f"
-  RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
-  RPS2=$RPS1
-  zle reset-prompt
+VIM_NORMAL="%K{148}%F%k%f%K{148}%F{022} %B NORMAL %b%k%f%K{black}%F{148}⮀%k%f"
+VIM_INSERT="%K{255}%F%k%f%K{255}%F{024} %B INSERT %b%k%f%K{black}%F{255}⮀%k%f"
+RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+RPS2=$RPS1
+zle reset-prompt
 }
 # 履歴関連
 autoload history-search-end
@@ -41,14 +41,19 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-# export homeBin
-export PATH=$PATH:$HOME/.bin/sh/
-
 # export Android development
-export ANDROID_SDK=$HOME/Library/android-sdk-macosx
-export ANDROID_NDK=$HOME/Library/android-ndk-r10e
-export PATH=$PATH:ANDROID_SDK/platform-tools
-export PATH=$PATH:ANDROID_SDK/tools
+export ANDROID_SDK=${HOME}/Library/android-sdk-macosx
+export ANDROID_NDK=${HOME}/Library/android-ndk-r10e
+
+# 環境変数(PATH)
+## tmux起動によって２重に読み込まれることが内容にするため
+if [[ -z $TMUX ]]; then
+  # export homeBin
+  export PATH=${PATH}:${HOME}/.bin/sh
+  # export Android development
+  export PATH=${PATH}:${ANDROID_SDK}/platform-tools/
+  export PATH=${PATH}:${ANDROID_SDK}/tools/
+fi
 
 # Customize to your needs...
 export WWW_HOME="google.co.jp"
