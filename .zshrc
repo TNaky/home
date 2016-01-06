@@ -3,7 +3,9 @@
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+
+# alias
+alias "airport=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -45,6 +47,9 @@ bindkey -M vicmd v edit-command-line
 export ANDROID_SDK=${HOME}/Library/android-sdk-macosx
 export ANDROID_NDK=${HOME}/Library/android-ndk-r10e
 
+## Customize to your needs...
+export WWW_HOME="google.co.jp"
+
 # 環境変数(PATH)
 ## tmux起動によって２重に読み込まれることが内容にするため
 if [[ -z $TMUX ]]; then
@@ -55,8 +60,19 @@ if [[ -z $TMUX ]]; then
   export PATH=${PATH}:${ANDROID_SDK}/tools/
 fi
 
-# Customize to your needs...
-export WWW_HOME="google.co.jp"
+# login時にtmuxを起動
+if [[ -z "$TMUX" && -z "$WINDOW" && ! -z "$PS1" ]]; then
+  if $(tmux has-session 2> /dev/null); then
+    tmux attach -d
+  else
+    tmux
+  fi
+fi
 
-# alias
-alias "airport=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
+exit() {
+  if [[ -z $TMUX ]]; then
+    builtin exit
+  else 
+    tmux detach
+  fi
+}
