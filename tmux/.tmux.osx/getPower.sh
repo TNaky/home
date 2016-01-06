@@ -5,5 +5,5 @@ if [ $POWER -gt 60 ]; then
 elif [ $POWER -gt 30 ]; then
   echo "⚡ #[fg=colour226]${POWER}%"
 else
-  echo "⚡ #[fg=colour9]${POWER}%"
+  echo "⚡ #[fg=colour160]${POWER}%"
 fi
