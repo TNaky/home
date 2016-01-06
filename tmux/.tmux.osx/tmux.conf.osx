@@ -1,1 +1,1 @@
-set-option -g status-right "#[fg=colour226] #(/usr/bin/pmset -g ps | tail -n 1 | awk '{print $2}' | sed 's/;//';) #[fg=cyan][%Y-%m-%d(%a) %H:%M:%S]"
+set-option -g status-right "#[fg=colour226] #(sh ./getPower.sh) #[fg=cyan][%Y-%m-%d(%a) %H:%M:%S]"
