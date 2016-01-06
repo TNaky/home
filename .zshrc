@@ -57,3 +57,6 @@ fi
 
 # Customize to your needs...
 export WWW_HOME="google.co.jp"
+
+# alias
+alias "airport=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
