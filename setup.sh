@@ -29,6 +29,8 @@ case "${os}" in
       brew tig
       brew install wget
       brew install source-highlight
+      source ${HOME}/.zshrc
+      ./setupPrezto.sh
     fi
     ;;
 esac
