@@ -4,6 +4,16 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 
+# OS別の処理
+OS=''
+if [[ "$(uname)" == 'Darwin' ]]; then
+  OS='mac'
+elif [[ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]]; then
+  OS='linux'
+elif [[ "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]]; then
+  OS='cygwin'
+fi
+
 # alias
 alias "airport=/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
 
@@ -50,6 +60,18 @@ export ANDROID_NDK=${HOME}/Library/android-ndk-r10e
 ## Customize to your needs...
 export WWW_HOME="google.co.jp"
 
+# less 関連の環境変数
+## -j10 検索結果が上から１０行目に来る
+## --no-init less終了後も表示内容が残る
+## --quit-if-one-screen 画面に収まりきる表示量であれば終了する
+## --RAW-CONTROL-CHARS カラーコードを適切に処理
+export LESS='-j10 --no-init --quit-if-one-screen --RAW-CONTROL-CHARS'
+if [[ $OS = 'mac' ]]; then
+  ## source-highlightと同梱されてるカラースキーマまでのパス
+  ## src-hilite-lesspipe.shはソースをVim等のエディタみたいにハイライトしてくれるスクリプト
+  export LESSOPEN='| src-hilite-lesspipe.sh %s'
+fi
+
 # 環境変数(PATH)
 ## tmux起動によって２重に読み込まれることが内容にするため
 if [[ -z $TMUX ]]; then
@@ -69,6 +91,7 @@ if [[ -z "$TMUX" && -z "$WINDOW" && ! -z "$PS1" ]]; then
   fi
 fi
 
+# exitの処理をtmuxログインの是非によって分岐
 exit() {
   if [[ -z $TMUX ]]; then
     builtin exit
