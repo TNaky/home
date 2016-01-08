@@ -10,6 +10,42 @@ elif [ ${stat} != 'running' ]; then
   echo 'Wi-Fi off'
 else
   levels=(▁ ▃ ▅ ▇ )
+  sigLev=''
+  for i in {0..4}; do
+    case "${i}" in
+      0 )
+        if [ $rssi -gt -94 ]; then
+          sigLev="${sigLev}${levels[${i}]}"
+        else
+          sigLev="${sigLev} "
+        fi
+        ;;
+      1 )
+        if [ $rssi -gt -92 ]; then
+          sigLev="${sigLev}${levels[${i}]}"
+        else
+          sigLev="${sigLev} "
+        fi
+        ;;
+      2 )
+        if [ $rssi -gt -86 ]; then
+          sigLev="${sigLev}${levels[${i}]}"
+        else
+          sigLev="${sigLev} "
+        fi
+        ;;
+      3 )
+        if [ $rssi -gt -79 ]; then
+          sigLev="${sigLev}${levels[${i}]}"
+        else
+          sigLev="${sigLev} "
+        fi
+        ;;
+    esac
+  done
+
+  sigLev="(${sigLev})"
+
   colour="#[fg=colour246]"
-  echo "${colour}${ssid} ${rate}Mbps"
+  echo "${colour}${ssid} ${rate}Mbps ${sigLev}"
 fi
