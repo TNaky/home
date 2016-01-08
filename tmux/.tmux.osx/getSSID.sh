@@ -3,7 +3,7 @@ info=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resource
 ssid=`echo "${info}" | grep -w SSID | awk '{print $2}'`
 rssi=`echo "${info}" | grep -w agrCtlRSSI | awk '{print $2}'`
 stat=`echo "${info}" | grep -w state | awk '{print $2}'`
-rate=`echo "${info}" | grep -w state lastTxRate awk '{print $2}'`
+rate=`echo "${info}" | grep -w lastTxRate | awk '{print $2}'`
 if [ ${ssid} = '' ]; then
   echo 'Wi-Fi off'
 elif [ ${stat} != 'running' ]; then
