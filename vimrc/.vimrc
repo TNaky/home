@@ -129,15 +129,22 @@ if has('vim_starting')
   " インデントを視覚化
   NeoBundle 'nathanaelkane/vim-indent-guides'
   " ANSIカラーを表示反映
+  " :AnsiEscで有効無効を切り替え
   NeoBundle 'vim-scripts/AnsiEsc.vim'
+  " Vimでメモをとるためもプラグイン
+  NeoBundle 'fuenor/qfixhowm'
+  " Vim用のgrepプラグイン
+  NeoBundle 'fuenor/qfixgrep'
 
   " 以下カラースキーム
   " olarized カラースキーム
   NeoBundle 'altercation/vim-colors-solarized'
   " mustang カラースキーム
   NeoBundle 'croaker/mustang-vim'
-  " wombat カラースキーム
+  " wombat カラースキームその１
   NeoBundle 'jeffreyiacono/vim-colors-wombat'
+  " wombat カラースキームその２
+  NeoBundle 'vim-scripts/Wombat'
   " jellybeans カラースキーム
   NeoBundle 'nanotech/jellybeans.vim'
   " lucius カラースキーム
@@ -375,6 +382,12 @@ endif
 if !exists('g:tcomment_types')
   let g:tcomment_types = {}
 endif
+
+" QFixHowmの設定
+" QuickFixウィンドウでもプレビューや絞り込みを有効化
+let QFixWin_EnableMode = 1
+" QFixHowm/QFixGrepの結果表示にロケーションリストを使用する/しない
+let QFix_UseLocationList = 1
 
 " インデントの視覚化をオンにします
 let g:indent_guides_enable_on_vim_startup = 1
