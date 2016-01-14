@@ -1,1 +1,0 @@
-set-option -g status-right "#(sh ~/.tmux.osx/getWiFiStat.sh) #(sh ~/.tmux.osx/getPower.sh) #[fg=cyan][%Y-%m-%d(%a) %H:%M:%S]"
