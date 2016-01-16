@@ -34,109 +34,13 @@ brew reinstall vim --with-lua
 ```
 
 ### Debian
-ソースファイルをダウンロードして，コンパイルする必要あり
-
-先ず，必要なアプリケーションのパッケージをインストールする前に，
-Debianで利用されているパッケージ管理ソフト **aptitude** の
-**update** と **upgrade** を取り敢えず実施
+Debian & Ubuntuのみ検証済み
 
 ```zsh
-sudo aptitude update
-sudo aptitude safe-upgrade
+$ sudo aptitude install vim-nox
 ```
 
-古いVimは消す（下記以外のVimがインストールされてて，必要もないのであれば消しちゃっても問題なし？）
-
-```zsh
-sudo aptitude remove vim-common vim-tiny
-```
-
-Vimのコンパイルに必要なパッケージを導入
-
-```zsh
-sudo aptitude install \
-  libncurses5-dev \
-  libgnome2-dev \
-  libgnomeui-dev \
-  libgtk2.0-dev \
-  libatk1.0-dev \
-  libbonoboui2-dev \
-  liblua5.2-dev \
-  libcairo2-dev \
-  libx11-dev \
-  libxpm-dev \
-  libxt-dev \
-  python-dev \
-  python3-dev \
-  ruby-dev \
-  lua5.2 \
-  ruby
-```
-
-make install したパッケージを管理するために **prog** を導入
-他のを既に利用してるならそっちでもいいかも
-
-```zsh
-wget -O porg-0.8.tar.gz http://downloads.sourceforge.net/project/porg/porg-0.8.tar.gz\?r\=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fporg%2Ffiles%2F\&ts\=1445657533\&use_mirror\=jaist
-tar -zxvf porg-0.8.tar.gz
-cd porg-0.8
-./configure --disable-grop
-make
-sudo meke install
-sudo make logme
-```
-
-Vimのソースファイルを入手するために使う，
-バージョン管理ソフト **mercurial** を入手し，
-Vimのソースファイルをクローン＆コンパイル
-
-```zsh
-sudo aptitude install mercurial
-hg clone https://bitbucket.org/vim-mirror/vim
-cd vim
-./configure \
-  --with-features=huge \
-  --disable-darwin \
-  --disable-selinux \
-  --enable-luainterp \
-  --enable-perlinterp \
-  --enable-pythoninterp \
-  --enable-python3interp \
-  --enable-rubyinterp \
-  --enable-cscope \
-  --enable-multibyte \
-  --enable-xim \
-  --enable-fontset \
-  --enable-gui=gnome2
-make
-sudo porg -lp vim "make install"
-```
-
-これで，+luaのVimがインストール完了
-
-なお，porgでパッケージ管理の管理をしてるので，
-パッケージで管理している一覧は
-
-```zsh
-porg -f vim
-```
-
-で確認可能
-削除したくなったら，
-
-```zsh
-porg -r vim
-```
-
-とかやればインストールしたVimを削除できる
-
-ちなみにporgで管理してる一覧は
-
-```zsh
-porg -a
-```
-
-で確認できるので，インストール時に設定したパッケージ名忘れたらこれで確認する
+[Vim-nox](https://packages.debian.org/ja/jessie/vim-nox)
 
 ## PowerlineFont install
 当Vimrcではステータス標示にPowerlineFontと呼ばれる，特別なフォントを利用します．
