@@ -27,12 +27,15 @@ setopt no_beep
 # Vi mode
 bindkey -v
 function zle-line-init zle-keymap-select {
-VIM_NORMAL="%K{148}%F%k%f%K{148}%F{022} %B NORMAL %b%k%f%K{black}%F{148}⮀%k%f"
-VIM_INSERT="%K{255}%F%k%f%K{255}%F{024} %B INSERT %b%k%f%K{black}%F{255}⮀%k%f"
-RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
-RPS2=$RPS1
-zle reset-prompt
+  # VIM_NORMAL="%K{148}%F%k%f%K{148}%F{022} %B NORMAL %b%k%f%K{black}%F{148}⮀%k%f"
+  # VIM_INSERT="%K{255}%F%k%f%K{255}%F{024} %B INSERT %b%k%f%K{black}%F{255}⮀%k%f"
+  VIM_NORMAL="-- %F{022}NORMAL%f --"
+  VIM_INSERT="-- %F{024}INSERT%f --"
+  RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+  RPS2=$RPS1
+  zle reset-prompt
 }
+
 # 履歴関連
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -60,20 +63,6 @@ export ANDROID_NDK=${HOME}/Library/android-ndk-r10e
 ## Customize to your needs...
 export WWW_HOME="google.co.jp"
 
-# Google search
-function ggl() {
-  local str opt
-  if [ $# != 0 ]; then
-    for i in $*; do
-      # $strが空じゃない場合、検索ワードを+記号でつなぐ(and検索)
-      str="$str${str:++}$i"
-    done
-    opt='search?num=100'
-    opt="${opt}&q=${str}"
-  fi
-  open -a Safari https://www.google.co.jp/$opt
-}
-
 # less 関連の環境変数
 ## -j10 検索結果が上から１０行目に来る
 ## --no-init less終了後も表示内容が残る
@@ -94,6 +83,7 @@ if [[ -z $TMUX ]]; then
   # export Android development
   export PATH=${PATH}:${ANDROID_SDK}/platform-tools/
   export PATH=${PATH}:${ANDROID_SDK}/tools/
+  export ANDROID_ABI='armeabi-v7a'
 fi
 
 # login時にtmuxを起動
