@@ -1,9 +1,3 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-
 # OS別の処理
 OS=''
 if [[ "$(uname)" == 'Darwin' ]]; then
