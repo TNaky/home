@@ -525,6 +525,9 @@ function! MyCharCode()
 endfunction
 
 " キーマップ設定
+" コマンドラインウィンドウでコマンド履歴を移動
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 " インサートモード時のみESCをjjでも許可
 inoremap <silent> jj <ESC>
 " F1をを日本語ヘルプに変更
