@@ -135,6 +135,8 @@ if has('vim_starting')
   NeoBundle 'fuenor/qfixhowm'
   " Vim用のgrepプラグイン
   NeoBundle 'fuenor/qfixgrep'
+  " GitkのVimバージョン的なプラグイン
+  NeoBundle 'gregsexton/gitv'
 
   " 以下カラースキーム
   " olarized カラースキーム
@@ -723,4 +725,9 @@ augroup END
 augroup cpp_path
   autocmd!
   autocmd FileType cpp setlocal path+=.,/usr/include,/usr/local/include
+augroup END
+
+augroup Gitk
+  autocmd!
+  autocmd FileType git :setlocal foldlevel=99
 augroup END
