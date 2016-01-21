@@ -625,6 +625,12 @@ set fileencodings=utf-8,iso-2022-jp,sjis,euc-jp
 set ff=unix
 " 改行コードの自動判別
 set fileformats=unix,dos,mac
+" Exコマンドをzsh風に自動補完
+set wildmenu
+" Exコマンドの補完設定
+set wildmode=full
+" ヒストリを500まで持つように設定
+set history=200
 " 行番号標示
 set number
 " マウス入力を有効化
