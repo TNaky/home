@@ -57,6 +57,20 @@ export ANDROID_NDK=${HOME}/Library/android-ndk-r10e
 ## Customize to your needs...
 export WWW_HOME="google.co.jp"
 
+# Google search
+function ggl() {
+  local str opt
+  if [ $# != 0 ]; then
+    for i in $*; do
+      # $strが空じゃない場合、検索ワードを+記号でつなぐ(and検索)
+      str="$str${str:++}$i"
+    done
+    opt='search?num=100'
+    opt="${opt}&q=${str}"
+  fi
+  open -a Safari https://www.google.co.jp/$opt
+}
+
 # less 関連の環境変数
 ## -j10 検索結果が上から１０行目に来る
 ## --no-init less終了後も表示内容が残る
